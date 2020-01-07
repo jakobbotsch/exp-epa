@@ -1,0 +1,336 @@
+typedef CtxS = CtxS{id: bit<32>}
+typedef CtxMorphS = CtxMorphS{id: bit<32>}
+typedef TyS = TyS{id: bit<32>}
+typedef TmS = TmS{id: bit<32>}
+
+relation CtxEq(l: CtxS, r: CtxS)
+relation CtxMorphEq(l: CtxMorphS, r: CtxMorphS)
+relation TyEq(l: TyS, r: TyS)
+relation TmEq(l: TmS, r: TmS)
+
+relation Ctx(ctx: CtxS)
+relation CtxMorph(f: CtxMorphS, from: CtxS, to: CtxS)
+relation Ty(ty: TyS, ctx: CtxS)
+relation Tm(tm: TmS, ty: TyS)
+
+// Functional relations
+// IdMorph f -- f is an identity context morphism
+relation IdMorph(f: CtxMorphS)
+// Comp g f gf -- gf is g . f
+relation Comp(g: CtxMorphS, f: CtxMorphS, gf: CtxMorphS)
+// TySubst s f t -- t is s{f}
+relation TySubst(ty: TyS, f: CtxMorphS, sub: TyS)
+// TmSubst M f N -- N is M{f}
+relation TmSubst(tm: TmS, f: CtxMorphS, sub: TmS)
+// CtxEmpty G -- G is the empty (terminal) context
+relation CtxEmpty(ctx: CtxS)
+// Comprehension G s D -- |- G, x : s = D ctx
+relation Comprehension(without: CtxS, ty: TyS, with: CtxS)
+// ProjCtx G s f -- f is the projection G, x : s |- p(s) => G
+relation ProjCtx(ctx: CtxS, ty: TyS, f: CtxMorphS)
+// ProjTm G s M -- M is the projection G, x : s |- x : s
+relation ProjTm(ctx: CtxS, ty: TyS, tm: TmS)
+// Extension f M g -- g = <f, M>
+relation Extension(f: CtxMorphS, tm: TmS, e: CtxMorphS)
+
+// Intermediate relations
+relation TmBar(tm: TmS, f: CtxMorphS)
+relation Weakening(f: CtxMorphS, ty: TyS, q: CtxMorphS)
+
+// Type forming/introduction/elimination
+relation Id(left: TmS, right: TmS, ty: TyS)
+relation Refl(tm: TmS)
+
+relation Bool(ty: TyS)
+relation True(tm: TmS)
+relation False(tm: TmS)
+relation BoolElim(trueCase: TmS, falseCase: TmS, tm: TmS)
+
+//////////////////// Input relations ////////////////////
+
+input relation CtxEqInput(l: CtxS, r: CtxS)
+input relation CtxMorphEqInput(l: CtxMorphS, r: CtxMorphS)
+input relation TyEqInput(l: TyS, r: TyS)
+input relation TmEqInput(l: TmS, r: TmS)
+input relation CtxInput(ctx: CtxS)
+input relation CtxMorphInput(f: CtxMorphS, from: CtxS, to: CtxS)
+input relation TyInput(ty: TyS, ctx: CtxS)
+input relation TmInput(tm: TmS, ty: TyS)
+input relation IdMorphInput(f: CtxMorphS)
+input relation CompInput(g: CtxMorphS, f: CtxMorphS, gf: CtxMorphS)
+input relation TySubstInput(ty: TyS, f: CtxMorphS, sub: TyS)
+input relation TmSubstInput(tm: TmS, f: CtxMorphS, sub: TmS)
+input relation CtxEmptyInput(ctx: CtxS)
+input relation ComprehensionInput(without: CtxS, ty: TyS, with: CtxS)
+input relation ProjCtxInput(ctx: CtxS, ty: TyS, f: CtxMorphS)
+input relation ProjTmInput(ctx: CtxS, ty: TyS, tm: TmS)
+input relation ExtensionInput(f: CtxMorphS, tm: TmS, e: CtxMorphS)
+input relation IdInput(left: TmS, right: TmS, ty: TyS)
+input relation ReflInput(tm: TmS)
+input relation BoolInput(ty: TyS)
+input relation TrueInput(tm: TmS)
+input relation FalseInput(tm: TmS)
+input relation BoolElimInput(trueCase: TmS, falseCase: TmS, tm: TmS)
+CtxEq(l, r) :- CtxEqInput(l, r).
+CtxMorphEq(l, r) :- CtxMorphEqInput(l, r).
+TyEq(l, r) :- TyEqInput(l, r).
+TmEq(l, r) :- TmEqInput(l, r).
+Ctx(ctx) :- CtxInput(ctx).
+CtxMorph(f, from, to) :- CtxMorphInput(f, from, to).
+Ty(ty, ctx) :- TyInput(ty, ctx).
+Tm(tm, ty) :- TmInput(tm, ty).
+IdMorph(f) :- IdMorphInput(f).
+Comp(g, f, gf) :- CompInput(g, f, gf).
+TySubst(ty, f, sub) :- TySubstInput(ty, f, sub).
+TmSubst(tm, f, sub) :- TmSubstInput(tm, f, sub).
+CtxEmpty(ctx) :- CtxEmptyInput(ctx).
+Comprehension(without, ty, with) :- ComprehensionInput(without, ty, with).
+ProjCtx(ctx, ty, f) :- ProjCtxInput(ctx, ty, f).
+ProjTm(ctx, ty, tm) :- ProjTmInput(ctx, ty, tm).
+Extension(f, tm, e) :- ExtensionInput(f, tm, e).
+Id(left, right, ty) :- IdInput(left, right, ty).
+Refl(tm) :- ReflInput(tm).
+Bool(ty) :- BoolInput(ty).
+True(tm) :- TrueInput(tm).
+False(tm) :- FalseInput(tm).
+BoolElim(trueCase, falseCase, tm) :- BoolElimInput(trueCase, falseCase, tm).
+
+//////////////////// Equalities ////////////////////
+
+CtxEq(ctx, ctx) :- Ctx(ctx).
+CtxEq(l, r) :- CtxEq(r, l).
+CtxEq(a, c) :- CtxEq(a, b), CtxEq(b, c).
+
+CtxMorphEq(f, f) :- CtxMorph(f, _, _).
+CtxMorphEq(l, r) :- CtxMorphEq(r, l).
+CtxMorphEq(a, c) :- CtxMorphEq(a, b), CtxMorphEq(b, c).
+
+TyEq(ty, ty) :- Ty(ty, _).
+TyEq(l, r) :- TyEq(r, l).
+TyEq(a, c) :- TyEq(a, b), TyEq(b, c).
+
+TmEq(tm, tm) :- Tm(tm, _).
+TmEq(l, r) :- TmEq(r, l).
+TmEq(a, c) :- TmEq(a, b), TmEq(b, c).
+
+//////////////////// Congruence rules ////////////////////
+
+Ctx(_D) :- Ctx(_G), CtxEq(_G, _D).
+
+CtxMorph(g, _A, _B) :- CtxMorph(f, _G, _D),
+                       CtxMorphEq(f, g),
+				       CtxEq(_G, _A),
+				       CtxEq(_D, _B).
+
+Comp(j, i, ji) :- Comp(g, f, gf),
+                  CtxMorphEq(g, j),
+                  CtxMorphEq(f, i),
+                  CtxMorphEq(gf, ji).
+
+// Conversion for types
+Ty(t, _D) :- Ty(s, _G), TyEq(s, t), CtxEq(_G, _D).
+// Conversion for terms
+Tm(_N, t) :- Tm(_M, s), TmEq(_M, _N), TyEq(s, t).
+
+IdMorph(g) :- IdMorph(f), CtxMorphEq(f, g).
+
+TySubst(u, g, v) :- TySubst(s, f, t),
+                    TyEq(s, u),
+                    CtxMorphEq(f, g),
+                    TyEq(t, v).
+
+TmSubst(_O, g, _P) :- TmSubst(_M, f, _N),
+                      TmEq(_M, _O),
+                      CtxMorphEq(f, g),
+                      TmEq(_N, _P).
+
+CtxEmpty(_D) :- CtxEmpty(_G), CtxEq(_G, _D).
+
+Comprehension(_D, t, _B) :- Comprehension(_G, s, _A),
+                            CtxEq(_G, _D),
+                            TyEq(s, t),
+                            CtxEq(_A, _B).
+
+ProjCtx(_D, t, g) :- ProjCtx(_G, s, f),
+                     CtxEq(_G, _D),
+                     TyEq(s, t),
+                     CtxMorphEq(f, g).
+
+ProjTm(_D, t, _N) :- ProjTm(_G, s, _M),
+                     CtxEq(_G, _D),
+                     TyEq(s, t),
+                     TmEq(_M, _N).
+
+Extension(h, _N, i) :- Extension(f, _M, g),
+                       CtxMorphEq(f, h),
+                       TmEq(_M, _N),
+                       CtxMorphEq(g, i).
+
+Id(_O, _P, t) :- Id(_M, _N, s),
+                 TmEq(_M, _O),
+                 TmEq(_N, _P),
+                 TyEq(s, t).
+
+Refl(_N) :- Refl(_M), TmEq(_M, _N).
+Bool(t) :- Bool(s), TyEq(s, t).
+True(_N) :- True(_M), TmEq(_M, _N).
+False(_N) :- False(_M), TmEq(_M, _N).
+
+BoolElim(_P, _Q, _R) :- BoolElim(_M, _N, _O),
+                        TmEq(_M, _P),
+                        TmEq(_N, _Q),
+                        TmEq(_O, _R).
+
+//////////////////// Functionality rules ////////////////////
+
+CtxMorphEq(f, g) :- IdMorph(f), CtxMorph(f, _G, _),
+                    IdMorph(g), CtxMorph(g, _G, _).
+TyEq(t, u) :- TySubst(s, f, t), TySubst(s, f, u).
+TmEq(_N, _O) :- TmSubst(_M, f, _N), TmSubst(_M, f, _O).
+CtxEq(_G, _D) :- CtxEmpty(_G), CtxEmpty(_D).
+CtxEq(_D, _A) :- Comprehension(_G, s, _D), Comprehension(_G, s, _A).
+CtxMorphEq(f, g) :- ProjCtx(_G, s, f), ProjCtx(_G, s, g).
+TmEq(_M, _N) :- ProjTm(_G, s, _M), ProjTm(_G, s, _N).
+CtxMorphEq(g, h) :- Extension(f, _M, g), Extension(f, _M, h).
+TyEq(s, t) :- Id(_M, _N, s), Id(_M, _N, t).
+TmEq(_M, _N) :- Refl(_M), Tm(_M, s),
+                Refl(_N), Tm(_N, s).
+TyEq(s, t) :- Bool(s), Ty(s, _G),
+              Bool(t), Ty(t, _G).
+TmEq(_M, _N) :- True(_M), Tm(_M, s),
+                True(_N), Tm(_N, s).
+TmEq(_M, _N) :- False(_M), Tm(_M, s),
+                False(_N), Tm(_N, s).
+TmEq(_O, _P) :- BoolElim(_M, _N, _O), BoolElim(_M, _N, _P).
+
+////////// Categorical rules //////////
+
+// g . id = g
+Comp(g, id, g) :- IdMorph(id), CtxMorph(id, ctx, _),
+                  CtxMorph(g, ctx, _).
+
+Comp(id, f, f) :- IdMorph(id), CtxMorph(id, ctx, _),
+                  CtxMorph(f, _, ctx).
+
+// h . (g . f) . h = (h . g) . f
+Comp(hg, f, hgf) :- Comp(g, f, gf), Comp(h, gf, hgf), Comp(h, g, hg).
+Comp(h, gf, hgf) :- Comp(h, g, hg), Comp(hg, f, hgf), Comp(g, f, gf).
+
+// s{id} = s
+TySubst(s, f, s) :- Ty(s, _G), IdMorph(f), CtxMorph(f, _G, _G).
+
+// s{g . f} = s{g}{f}
+TySubst(u, f, t) :- Comp(g, f, gf), TySubst(s, gf, t), TySubst(s, g, u).
+TySubst(s, gf, u) :- TySubst(s, g, t), TySubst(t, f, u), Comp(g, f, gf).
+
+// M{id} = M
+TmSubst(_M, f, _M) :- Tm(_M, s), Ty(s, _G), IdMorph(f), CtxMorph(f, _G, _G).
+
+// M{g . f} = M{g}{f}
+TmSubst(_O, f, _N) :- Comp(g, f, gf), TmSubst(_M, gf, _N), TmSubst(_M, g, _O).
+TmSubst(_M, gf, _O) :- TmSubst(_M, g, _N), TmSubst(_N, f, _O), Comp(g, f, gf).
+
+// p(s) . <f, M> = f
+Comp(p, e, f) :- ProjCtx(_G, s, p), CtxMorph(p, _B, _C),
+                 Extension(f, _M, e), CtxMorph(e, _A, _B).
+
+// v{<f, N>} = N
+TmSubst(_M, e, _N) :- ProjTm(_G, s, _M), Tm(_M, t), Ty(t, _D),
+                      Extension(f, _N, e), CtxMorph(e, _, _D).
+
+// <g, M> . f = <g . f, M{f}>
+Extension(gf, _N, ef) :- Extension(g, _M, e), Comp(e, f, ef),
+                         Comp(g, f, gf), TmSubst(_M, f, _N).
+Comp(es, f, el) :- Extension(g, _M, es),
+                   Comp(g, f, gf), TmSubst(_M, f, _N),
+                   Extension(gf, _N, el).
+
+// <p(s), v> = id
+IdMorph(e) :- ProjCtx(_G, s, p), ProjTm(_G, s, _M),
+              Extension(p, _M, e).
+Extension(p, _M, f) :- IdMorph(f), CtxMorph(f, _D, _),
+                       ProjCtx(_G, s, p), CtxMorph(p, _D, _G),
+                       ProjTm(_G, s, _M).
+
+//////////////////// Intermediate rules ////////////////////
+
+// <id, M> is M bar
+TmBar(_M, e) :- Extension(f, _M, e), IdMorph(f).
+
+// <f . p1(D.s{f}), p2(D.s{f})> is q(f, s)
+Weakening(f, s, e) :- CtxMorph(f, _G, _D),
+                      TySubst(s, f, t),
+                      ProjCtx(_D, t, p), ProjTm(_D, t, _M),
+                      Comp(f, p, g),
+                      Extension(f, _M, e).
+
+//////////////////// Type forming/introduction/elimination ////////////////////
+
+// (Id M N){f} = Id M{f} N{f}
+Id(_Q, _R, t) :- Id(_M, _N, s),
+                 TySubst(s, f, t),
+                 TmSubst(_M, f, _Q),
+                 TmSubst(_N, f, _R).
+TySubst(t, f, s) :- TmSubst(_M, f, _O), TmSubst(_N, f, _P),
+                    Id(_O, _P, s), Id(_M, _N, t).
+
+// Refl(D){f : G -> D} = Refl(G)
+Refl(_O) :- Refl(_M), Tm(_M, s), Ty(s, _D),
+            CtxMorph(f, _G, _D),
+            TmSubst(_M, f, _O).
+TmSubst(_N, f, _M) :- Refl(_M), Tm(_M, s), Ty(s, _G),
+                      Refl(_N), Tm(_N, t), Ty(t, _D),
+                      CtxMorph(f, _G, _D).
+
+// Reflection
+TmEq(_N, _O) :- Tm(_M, s), Id(_N, _O, s).
+
+// Id-Can
+Refl(_M) :- Tm(_M, s), Id(_N, _O, s).
+
+// Bool(D){f : G -> D} = Bool(G)
+Bool(t) :- Bool(s), Ty(s, _D),
+           CtxMorph(f, _G, _D), TySubst(s, f, t).
+TySubst(t, f, s) :- Bool(s), Ty(s, _G),
+                    Bool(t), Ty(t, _D),
+                    CtxMorph(f, _G, _D).
+
+// True(D){f : G -> D} = True(G)
+True(_O) :- True(_M), Tm(_M, s), Ty(s, _D),
+            CtxMorph(f, _G, _D),
+            TmSubst(_M, f, _O).
+TmSubst(_N, f, _M) :- True(_M), Tm(_M, s), Ty(s, _G),
+                      True(_N), Tm(_N, t), Ty(t, _D),
+                      CtxMorph(f, _G, _D).
+
+// False(D){f : G -> D} = False(G)
+False(_O) :- False(_M), Tm(_M, s), Ty(s, _D),
+             CtxMorph(f, _G, _D),
+             TmSubst(_M, f, _O).
+TmSubst(_N, f, _M) :- False(_M), Tm(_M, s), Ty(s, _G),
+                      False(_N), Tm(_N, t), Ty(t, _D),
+                      CtxMorph(f, _G, _D).
+
+// (BoolElim M N){q(f : G -> D, Bool)} = BoolElim M{f} N{f}
+BoolElim(_Q, _R, _P) :- BoolElim(_M, _N, _O),
+                        CtxMorph(f, _G, _D),
+                        Weakening(f, s, q), Bool(s), Ty(s, _D),
+                        TmSubst(_O, q, _P),
+                        TmSubst(_M, f, _Q),
+                        TmSubst(_N, f, _R).
+
+TmSubst(_O, q, _P) :- BoolElim(_Q, _R, _P),
+                      TmSubst(_M, f, _Q),
+                      TmSubst(_N, f, _R),
+                      CtxMorph(f, _G, _D),
+                      BoolElim(_M, _N, _O),
+                      Weakening(f, s, q), Bool(s), Ty(s, _D).
+
+// (BoolElim M N){<id, True>} = M
+TmSubst(_O, f, _M) :- BoolElim(_M, _N, _O), Tm(_O, s), Ty(s, _D),
+                      TmBar(_P, f), CtxMorph(f, _G, _D),
+                      True(_P).
+
+TmSubst(_O, f, _N) :- BoolElim(_M, _N, _O), Tm(_O, s), Ty(s, _D),
+                      TmBar(_P, f), CtxMorph(f, _G, _D),
+                      False(_P).
