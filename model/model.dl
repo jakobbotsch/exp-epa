@@ -280,7 +280,8 @@ Refl(_O) :- Refl(_M), Tm(_M, s), Ty(s, _D),
             TmSubst(_M, f, _O).
 TmSubst(_N, f, _M) :- Refl(_M), Tm(_M, s), Ty(s, _G),
                       Refl(_N), Tm(_N, t), Ty(t, _D),
-                      CtxMorph(f, _G, _D).
+                      CtxMorph(f, _G, _D),
+                      TySubst(t, f, s).
 
 // Reflection
 TmEq(_N, _O) :- Tm(_M, s), Id(_N, _O, s).
