@@ -168,7 +168,9 @@ namespace QT
         private T WithDbg<T>(T obj) where T : ModelObject
         {
             if (_debugInfo.TryGetValue(obj.Id, out string? dbg))
+            {
                 ModelObject.DbgInfo.Add(obj, dbg);
+            }
 
             return obj;
         }
@@ -239,6 +241,27 @@ namespace QT
             return WithDbg(tm);
         }
 
+        private ModelCtx GetCtx(uint id)
+            => WithDbg(new ModelCtx(id));
+
+        private CtxMorphism GetCtxMorphism(uint id)
+        {
+            Trace.Assert(_fix.Query(_z3Ctx.MkExists(new[] { _G, _D }, _ctxMorph.Apply(_G, _z3Ctx.MkBV(id, SortSize), _D))) == Status.SATISFIABLE);
+            return WithDbg(new CtxMorphism(id, GetCtx(ExtractAnswer(0)), GetCtx(ExtractAnswer(1))));
+        }
+
+        private Ty GetTy(uint id)
+        {
+            Trace.Assert(_fix.Query(_z3Ctx.MkExists(new[] { _G }, _ty.Apply(_G, _z3Ctx.MkBV(id, SortSize)))) == Status.SATISFIABLE);
+            return WithDbg(new Ty(id, GetCtx(ExtractAnswer(0))));
+        }
+
+        private Tm GetTm(uint id)
+        {
+            Trace.Assert(_fix.Query(_z3Ctx.MkExists(new[] { _G, _s }, _tmTy.Apply(_G, _z3Ctx.MkBV(id, SortSize), _s))) == Status.SATISFIABLE);
+            return WithDbg(new Tm(id, WithDbg(new Ty(ExtractAnswer(1), WithDbg(new ModelCtx(ExtractAnswer(0)))))));
+        }
+
         private bool IsTy(ModelCtx ctx, Ty ty)
             => _fix.Query((BoolExpr)_ty.Apply(BV(ctx), BV(ty))) == Status.SATISFIABLE;
 
@@ -301,16 +324,51 @@ namespace QT
             return tm;
         }
 
+        int step = 0;
         private Tm TypeCheckTerm(Expr expr, Ty ty)
         {
             Tm tm = TypeCheckAnyTerm(expr);
             if (!IsTyEq(ty, tm.Ty))
             {
-                string msg =
-                    $"Unexpected type of term.{Environment.NewLine}" +
-                    $"Expected: {ShortestDbgString(ty)}{Environment.NewLine}" +
-                    $"Actual: {ShortestDbgString(tm.Ty)}";
-                throw new Exception(msg);
+                if (step == 0)
+                {
+                    Tm elim = GetTm(29);
+                    Tm elimSubst1 = GetTm(31);
+                    CtxMorphism trueBar = GetCtxMorphism(13);
+                    //Tm subst = SubstTermAndType(elimSubst1, trueBar);
+                    bool eqNow = IsTyEq(ty, tm.Ty);
+                    CtxMorphism bBar = GetCtxMorphism(30);
+                    CtxMorphism comp = Compose(bBar, trueBar);
+                    eqNow = IsTyEq(ty, tm.Ty);
+                    step++;
+                }
+                else if (step == 1)
+                {
+                    CtxMorphism falseBar = GetCtxMorphism(15);
+                    CtxMorphism bBar = GetCtxMorphism(30);
+                    CtxMorphism comp = Compose(bBar, falseBar);
+                    bool eqNow = IsTyEq(ty, tm.Ty);
+
+                    step++;
+                }
+                else if (step == 2)
+                {
+                    DumpRels("all");
+                    CtxMorphism aBar = GetCtxMorphism(17);
+                    CtxMorphism bBar = GetCtxMorphism(30);
+                    CtxMorphism comp = Compose(bBar, aBar);
+                    bool eqNow = IsTyEq(ty, tm.Ty);
+
+                    step++;
+                }
+                else
+                {
+                    string msg =
+                        $"Unexpected type of term.{Environment.NewLine}" +
+                        $"Expected: {ShortestDbgString(ty)}{Environment.NewLine}" +
+                        $"Actual: {ShortestDbgString(tm.Ty)}";
+                    throw new Exception(msg);
+                }
             }
 
             return tm;
