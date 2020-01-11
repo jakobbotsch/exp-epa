@@ -252,6 +252,25 @@ Extension(p, _M, f) :- IdMorph(f), CtxMorph(f, _D, _),
                        ProjCtx(_G, s, p), CtxMorph(p, _D, _G),
                        ProjTm(_G, s, _M).
 
+//////////////////// Uniqueness rules ////////////////////
+
+// Unique morphisms to terminal object
+CtxMorphEq(f, g) :- CtxEmpty(_G), CtxMorph(f, _D, _G), CtxMorph(g, _D, _G).
+
+// Unique extension
+Extension(f, _N, e) :- ProjCtx(_G, s, p), ProjTm(_G, s, _M),
+                       Comp(p, e, f),
+                       TmSubst(_M, e, _N).
+
+// O{<f, True>} = M{f} and O{<f, False>} = N{f} implies
+// BoolElim M N O
+BoolElim(_M, _N, _O) :- Extension(f, _P, g), True(_P),
+                        TmSubst(_O, g, _S),
+                        TmSubst(_M, f, _S),
+                        Extension(f, _Q, h), False(_Q),
+                        TmSubst(_O, h, _T),
+                        TmSubst(_N, f, _T).
+
 //////////////////// Intermediate rules ////////////////////
 
 // <id, M> is M bar

@@ -69,7 +69,7 @@ name = "model_ddlog"
 # Compiler will append the crate-type attribute here
 # crate-type = ["rlib", "staticlib"]
 
-crate-type = ["rlib", "staticlib", "cdylib"]
+crate-type = ["rlib", "staticlib"]
 
 [dependencies.num]
 version = "0.2"
