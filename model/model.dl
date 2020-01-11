@@ -346,11 +346,20 @@ TmSubst(_O, q, _P) :- BoolElim(_Q, _R, _P),
                       BoolElim(_M, _N, _O),
                       Weakening(f, s, q), Bool(s), Ty(s, _D).
 
-// (BoolElim M N){<id, True>} = M
-TmSubst(_O, f, _M) :- BoolElim(_M, _N, _O), Tm(_O, s), Ty(s, _D),
-                      TmBar(_P, f), CtxMorph(f, _G, _D),
-                      True(_P).
+// (BoolElim M N){<f, True>} = M{f}
+TmSubst(_M, f, _Q) :- BoolElim(_M, _N, _O),
+                      Extension(f, _P, e), True(_P),
+                      TmSubst(_O, e, _Q).
 
-TmSubst(_O, f, _N) :- BoolElim(_M, _N, _O), Tm(_O, s), Ty(s, _D),
-                      TmBar(_P, f), CtxMorph(f, _G, _D),
-                      False(_P).
+TmSubst(_O, e, _Q) :- BoolElim(_M, _N, _O),
+                      Extension(f, _P, e), True(_P),
+                      TmSubst(_M, f, _Q).
+
+// (BoolElim M N){<f, False>} = N{f}
+TmSubst(_N, f, _Q) :- BoolElim(_M, _N, _O),
+                      Extension(f, _P, e), False(_P),
+                      TmSubst(_O, e, _Q).
+
+TmSubst(_O, e, _Q) :- BoolElim(_M, _N, _O),
+                      Extension(f, _P, e), False(_P),
+                      TmSubst(_N, f, _Q).

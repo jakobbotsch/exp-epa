@@ -4126,6 +4126,8 @@ impl TryFrom<&str> for Relations {
         "__Prefix_4" => Ok(Relations::__Prefix_4),
         "__Prefix_5" => Ok(Relations::__Prefix_5),
         "__Prefix_6" => Ok(Relations::__Prefix_6),
+        "__Prefix_7" => Ok(Relations::__Prefix_7),
+        "__Prefix_8" => Ok(Relations::__Prefix_8),
              _  => Err(())
          }
     }
@@ -4252,6 +4254,8 @@ impl TryFrom<RelId> for Relations {
         53 => Ok(Relations::__Prefix_4),
         54 => Ok(Relations::__Prefix_5),
         55 => Ok(Relations::__Prefix_6),
+        56 => Ok(Relations::__Prefix_7),
+        57 => Ok(Relations::__Prefix_8),
              _  => Err(())
          }
     }
@@ -4314,6 +4318,8 @@ pub fn relid2name(rid: RelId) -> Option<&'static str> {
         53 => Some(&"__Prefix_4"),
         54 => Some(&"__Prefix_5"),
         55 => Some(&"__Prefix_6"),
+        56 => Some(&"__Prefix_7"),
+        57 => Some(&"__Prefix_8"),
        _  => None
    }
 }
@@ -4379,6 +4385,8 @@ lazy_static! {
         m.insert(Relations::__Prefix_4, "__Prefix_4");
         m.insert(Relations::__Prefix_5, "__Prefix_5");
         m.insert(Relations::__Prefix_6, "__Prefix_6");
+        m.insert(Relations::__Prefix_7, "__Prefix_7");
+        m.insert(Relations::__Prefix_8, "__Prefix_8");
         m
    };
 }
@@ -4441,6 +4449,8 @@ lazy_static! {
         m.insert(53, ffi::CString::new("__Prefix_4").unwrap_or_else(|_|ffi::CString::new(r"Cannot convert relation name to C string").unwrap()));
         m.insert(54, ffi::CString::new("__Prefix_5").unwrap_or_else(|_|ffi::CString::new(r"Cannot convert relation name to C string").unwrap()));
         m.insert(55, ffi::CString::new("__Prefix_6").unwrap_or_else(|_|ffi::CString::new(r"Cannot convert relation name to C string").unwrap()));
+        m.insert(56, ffi::CString::new("__Prefix_7").unwrap_or_else(|_|ffi::CString::new(r"Cannot convert relation name to C string").unwrap()));
+        m.insert(57, ffi::CString::new("__Prefix_8").unwrap_or_else(|_|ffi::CString::new(r"Cannot convert relation name to C string").unwrap()));
         m
    };
 }
@@ -4695,25 +4705,31 @@ pub fn relval_from_record(rel: Relations, _rec: &record::Record) -> Result<Value
             Ok(Value::tuple0__(<()>::from_record(_rec)?))
         },
         Relations::__Prefix_0 => {
-            Ok(Value::tuple8__CtxS_CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(boxed::Box::new(<(CtxS, CtxS, TmS, TmS, TmS, TmS, CtxMorphS, TyS)>::from_record(_rec)?)))
+            Ok(Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(boxed::Box::new(<(TmS, TmS, TmS, TmS, CtxMorphS, CtxMorphS)>::from_record(_rec)?)))
         },
         Relations::__Prefix_1 => {
-            Ok(Value::tuple3__CtxS_TyS_TyS(<(CtxS, TyS, TyS)>::from_record(_rec)?))
+            Ok(Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(boxed::Box::new(<(TmS, TmS, TmS, TmS, CtxMorphS, CtxMorphS)>::from_record(_rec)?)))
         },
         Relations::__Prefix_2 => {
-            Ok(Value::tuple4__CtxS_TmS_CtxMorphS_TyS(<(CtxS, TmS, CtxMorphS, TyS)>::from_record(_rec)?))
+            Ok(Value::tuple3__CtxS_TyS_TyS(<(CtxS, TyS, TyS)>::from_record(_rec)?))
         },
         Relations::__Prefix_3 => {
-            Ok(Value::tuple2__CtxS_CtxMorphS(<(CtxS, CtxMorphS)>::from_record(_rec)?))
+            Ok(Value::tuple4__CtxS_TmS_CtxMorphS_TyS(<(CtxS, TmS, CtxMorphS, TyS)>::from_record(_rec)?))
         },
         Relations::__Prefix_4 => {
-            Ok(Value::tuple2__TmS_TyS(<(TmS, TyS)>::from_record(_rec)?))
+            Ok(Value::tuple2__CtxS_CtxMorphS(<(CtxS, CtxMorphS)>::from_record(_rec)?))
         },
         Relations::__Prefix_5 => {
             Ok(Value::tuple2__TmS_TyS(<(TmS, TyS)>::from_record(_rec)?))
         },
         Relations::__Prefix_6 => {
             Ok(Value::tuple2__TmS_TyS(<(TmS, TyS)>::from_record(_rec)?))
+        },
+        Relations::__Prefix_7 => {
+            Ok(Value::tuple2__TmS_TyS(<(TmS, TyS)>::from_record(_rec)?))
+        },
+        Relations::__Prefix_8 => {
+            Ok(Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(boxed::Box::new(<(TmS, TmS, TmS, TmS, CtxMorphS, CtxMorphS)>::from_record(_rec)?)))
         }
     }
 }
@@ -4791,7 +4807,9 @@ pub enum Relations {
     __Prefix_3 = 52,
     __Prefix_4 = 53,
     __Prefix_5 = 54,
-    __Prefix_6 = 55
+    __Prefix_6 = 55,
+    __Prefix_7 = 56,
+    __Prefix_8 = 57
 }
 #[derive(Copy,Clone,Debug,PartialEq,Eq,Hash)]
 pub enum Indexes {
@@ -4821,7 +4839,6 @@ pub enum Value {
     tuple3__CtxS_CtxS_CtxMorphS((CtxS, CtxS, CtxMorphS)),
     tuple5__CtxS_CtxS_CtxMorphS_CtxMorphS_TyS(boxed::Box<(CtxS, CtxS, CtxMorphS, CtxMorphS, TyS)>),
     tuple4__CtxS_CtxS_TmS_TmS((CtxS, CtxS, TmS, TmS)),
-    tuple8__CtxS_CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(boxed::Box<(CtxS, CtxS, TmS, TmS, TmS, TmS, CtxMorphS, TyS)>),
     tuple6__CtxS_CtxS_TmS_TmS_TyS_TyS(boxed::Box<(CtxS, CtxS, TmS, TmS, TyS, TyS)>),
     tuple3__CtxS_CtxS_TyS((CtxS, CtxS, TyS)),
     tuple4__CtxS_CtxS_TyS_TyS((CtxS, CtxS, TyS, TyS)),
@@ -4833,8 +4850,6 @@ pub enum Value {
     tuple5__CtxS_TmS_TmS_CtxMorphS_TyS(boxed::Box<(CtxS, TmS, TmS, CtxMorphS, TyS)>),
     tuple5__CtxS_TmS_TmS_TmS_CtxMorphS(boxed::Box<(CtxS, TmS, TmS, TmS, CtxMorphS)>),
     tuple7__CtxS_TmS_TmS_TmS_CtxMorphS_CtxMorphS_TyS(boxed::Box<(CtxS, TmS, TmS, TmS, CtxMorphS, CtxMorphS, TyS)>),
-    tuple7__CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(boxed::Box<(CtxS, TmS, TmS, TmS, TmS, CtxMorphS, TyS)>),
-    tuple5__CtxS_TmS_TmS_TmS_TyS(boxed::Box<(CtxS, TmS, TmS, TmS, TyS)>),
     tuple4__CtxS_TmS_TmS_TyS((CtxS, TmS, TmS, TyS)),
     tuple5__CtxS_TmS_TmS_TyS_TyS(boxed::Box<(CtxS, TmS, TmS, TyS, TyS)>),
     tuple3__CtxS_TmS_TyS((CtxS, TmS, TyS)),
@@ -4854,7 +4869,7 @@ pub enum Value {
     tuple4__TmS_TmS_TmS_CtxMorphS((TmS, TmS, TmS, CtxMorphS)),
     tuple5__TmS_TmS_TmS_CtxMorphS_CtxMorphS(boxed::Box<(TmS, TmS, TmS, CtxMorphS, CtxMorphS)>),
     tuple5__TmS_TmS_TmS_TmS_CtxMorphS(boxed::Box<(TmS, TmS, TmS, TmS, CtxMorphS)>),
-    tuple4__TmS_TmS_TmS_TyS((TmS, TmS, TmS, TyS)),
+    tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(boxed::Box<(TmS, TmS, TmS, TmS, CtxMorphS, CtxMorphS)>),
     tuple3__TmS_TmS_TyS((TmS, TmS, TyS)),
     tuple4__TmS_TmS_TyS_TyS((TmS, TmS, TyS, TyS)),
     tuple2__TmS_TyS((TmS, TyS)),
@@ -4944,7 +4959,6 @@ impl fmt::Display for Value {
             Value::tuple3__CtxS_CtxS_CtxMorphS (v) => write!(f, "{:?}", *v),
             Value::tuple5__CtxS_CtxS_CtxMorphS_CtxMorphS_TyS (v) => write!(f, "{:?}", *v),
             Value::tuple4__CtxS_CtxS_TmS_TmS (v) => write!(f, "{:?}", *v),
-            Value::tuple8__CtxS_CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS (v) => write!(f, "{:?}", *v),
             Value::tuple6__CtxS_CtxS_TmS_TmS_TyS_TyS (v) => write!(f, "{:?}", *v),
             Value::tuple3__CtxS_CtxS_TyS (v) => write!(f, "{:?}", *v),
             Value::tuple4__CtxS_CtxS_TyS_TyS (v) => write!(f, "{:?}", *v),
@@ -4956,8 +4970,6 @@ impl fmt::Display for Value {
             Value::tuple5__CtxS_TmS_TmS_CtxMorphS_TyS (v) => write!(f, "{:?}", *v),
             Value::tuple5__CtxS_TmS_TmS_TmS_CtxMorphS (v) => write!(f, "{:?}", *v),
             Value::tuple7__CtxS_TmS_TmS_TmS_CtxMorphS_CtxMorphS_TyS (v) => write!(f, "{:?}", *v),
-            Value::tuple7__CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS (v) => write!(f, "{:?}", *v),
-            Value::tuple5__CtxS_TmS_TmS_TmS_TyS (v) => write!(f, "{:?}", *v),
             Value::tuple4__CtxS_TmS_TmS_TyS (v) => write!(f, "{:?}", *v),
             Value::tuple5__CtxS_TmS_TmS_TyS_TyS (v) => write!(f, "{:?}", *v),
             Value::tuple3__CtxS_TmS_TyS (v) => write!(f, "{:?}", *v),
@@ -4977,7 +4989,7 @@ impl fmt::Display for Value {
             Value::tuple4__TmS_TmS_TmS_CtxMorphS (v) => write!(f, "{:?}", *v),
             Value::tuple5__TmS_TmS_TmS_CtxMorphS_CtxMorphS (v) => write!(f, "{:?}", *v),
             Value::tuple5__TmS_TmS_TmS_TmS_CtxMorphS (v) => write!(f, "{:?}", *v),
-            Value::tuple4__TmS_TmS_TmS_TyS (v) => write!(f, "{:?}", *v),
+            Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS (v) => write!(f, "{:?}", *v),
             Value::tuple3__TmS_TmS_TyS (v) => write!(f, "{:?}", *v),
             Value::tuple4__TmS_TmS_TyS_TyS (v) => write!(f, "{:?}", *v),
             Value::tuple2__TmS_TyS (v) => write!(f, "{:?}", *v),
@@ -5040,8 +5052,8 @@ impl fmt::Display for Value {
         }
     }
 }
-decl_val_enum_into_record!(Value, <>, tuple0__(x), tuple2__CtxMorphS_CtxMorphS(x), tuple3__CtxMorphS_CtxMorphS_CtxMorphS(x), tuple4__CtxMorphS_CtxMorphS_CtxMorphS_CtxMorphS(x), tuple3__CtxMorphS_CtxMorphS_TyS(x), tuple4__CtxMorphS_CtxMorphS_TyS_TyS(x), tuple2__CtxMorphS_CtxS(x), tuple3__CtxMorphS_CtxS_CtxS(x), tuple2__CtxMorphS_TmS(x), tuple2__CtxMorphS_TyS(x), tuple3__CtxMorphS_TyS_TyS(x), tuple2__CtxS_CtxMorphS(x), tuple3__CtxS_CtxMorphS_CtxMorphS(x), tuple4__CtxS_CtxMorphS_CtxMorphS_CtxMorphS(x), tuple4__CtxS_CtxMorphS_CtxMorphS_TyS(x), tuple5__CtxS_CtxMorphS_CtxMorphS_TyS_TyS(x), tuple3__CtxS_CtxMorphS_TyS(x), tuple4__CtxS_CtxMorphS_TyS_TyS(x), tuple2__CtxS_CtxS(x), tuple3__CtxS_CtxS_CtxMorphS(x), tuple5__CtxS_CtxS_CtxMorphS_CtxMorphS_TyS(x), tuple4__CtxS_CtxS_TmS_TmS(x), tuple8__CtxS_CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(x), tuple6__CtxS_CtxS_TmS_TmS_TyS_TyS(x), tuple3__CtxS_CtxS_TyS(x), tuple4__CtxS_CtxS_TyS_TyS(x), tuple2__CtxS_TmS(x), tuple3__CtxS_TmS_CtxMorphS(x), tuple4__CtxS_TmS_CtxMorphS_TyS(x), tuple3__CtxS_TmS_TmS(x), tuple4__CtxS_TmS_TmS_CtxMorphS(x), tuple5__CtxS_TmS_TmS_CtxMorphS_TyS(x), tuple5__CtxS_TmS_TmS_TmS_CtxMorphS(x), tuple7__CtxS_TmS_TmS_TmS_CtxMorphS_CtxMorphS_TyS(x), tuple7__CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(x), tuple5__CtxS_TmS_TmS_TmS_TyS(x), tuple4__CtxS_TmS_TmS_TyS(x), tuple5__CtxS_TmS_TmS_TyS_TyS(x), tuple3__CtxS_TmS_TyS(x), tuple2__CtxS_TyS(x), tuple3__CtxS_TyS_TyS(x), tuple2__TmS_CtxMorphS(x), tuple3__TmS_CtxMorphS_CtxMorphS(x), tuple4__TmS_CtxMorphS_CtxMorphS_CtxMorphS(x), tuple4__TmS_CtxMorphS_CtxMorphS_TyS(x), tuple3__TmS_CtxMorphS_TyS(x), tuple2__TmS_TmS(x), tuple3__TmS_TmS_CtxMorphS(x), tuple4__TmS_TmS_CtxMorphS_CtxMorphS(x), tuple4__TmS_TmS_CtxMorphS_TyS(x), tuple5__TmS_TmS_CtxMorphS_TyS_TyS(x), tuple3__TmS_TmS_TmS(x), tuple4__TmS_TmS_TmS_CtxMorphS(x), tuple5__TmS_TmS_TmS_CtxMorphS_CtxMorphS(x), tuple5__TmS_TmS_TmS_TmS_CtxMorphS(x), tuple4__TmS_TmS_TmS_TyS(x), tuple3__TmS_TmS_TyS(x), tuple4__TmS_TmS_TyS_TyS(x), tuple2__TmS_TyS(x), tuple2__TyS_CtxMorphS(x), tuple3__TyS_CtxMorphS_TyS(x), tuple2__TyS_CtxS(x), tuple2__TyS_TyS(x), Bool(x), BoolElim(x), BoolElimInput(x), BoolInput(x), Comp(x), CompInput(x), Comprehension(x), ComprehensionInput(x), Ctx(x), CtxEmpty(x), CtxEmptyInput(x), CtxEq(x), CtxEqInput(x), CtxInput(x), CtxMorph(x), CtxMorphEq(x), CtxMorphEqInput(x), CtxMorphInput(x), CtxMorphS(x), CtxS(x), Extension(x), ExtensionInput(x), False(x), FalseInput(x), Id(x), IdInput(x), IdMorph(x), IdMorphInput(x), ProjCtx(x), ProjCtxInput(x), ProjTm(x), ProjTmInput(x), Refl(x), ReflInput(x), Tm(x), TmBar(x), TmEq(x), TmEqInput(x), TmInput(x), TmS(x), TmSubst(x), TmSubstInput(x), True(x), TrueInput(x), Ty(x), TyEq(x), TyEqInput(x), TyInput(x), TyS(x), TySubst(x), TySubstInput(x), Weakening(x));
-decl_record_mutator_val_enum!(Value, <>, tuple0__(()), tuple2__CtxMorphS_CtxMorphS((CtxMorphS, CtxMorphS)), tuple3__CtxMorphS_CtxMorphS_CtxMorphS((CtxMorphS, CtxMorphS, CtxMorphS)), tuple4__CtxMorphS_CtxMorphS_CtxMorphS_CtxMorphS((CtxMorphS, CtxMorphS, CtxMorphS, CtxMorphS)), tuple3__CtxMorphS_CtxMorphS_TyS((CtxMorphS, CtxMorphS, TyS)), tuple4__CtxMorphS_CtxMorphS_TyS_TyS((CtxMorphS, CtxMorphS, TyS, TyS)), tuple2__CtxMorphS_CtxS((CtxMorphS, CtxS)), tuple3__CtxMorphS_CtxS_CtxS((CtxMorphS, CtxS, CtxS)), tuple2__CtxMorphS_TmS((CtxMorphS, TmS)), tuple2__CtxMorphS_TyS((CtxMorphS, TyS)), tuple3__CtxMorphS_TyS_TyS((CtxMorphS, TyS, TyS)), tuple2__CtxS_CtxMorphS((CtxS, CtxMorphS)), tuple3__CtxS_CtxMorphS_CtxMorphS((CtxS, CtxMorphS, CtxMorphS)), tuple4__CtxS_CtxMorphS_CtxMorphS_CtxMorphS((CtxS, CtxMorphS, CtxMorphS, CtxMorphS)), tuple4__CtxS_CtxMorphS_CtxMorphS_TyS((CtxS, CtxMorphS, CtxMorphS, TyS)), tuple5__CtxS_CtxMorphS_CtxMorphS_TyS_TyS((CtxS, CtxMorphS, CtxMorphS, TyS, TyS)), tuple3__CtxS_CtxMorphS_TyS((CtxS, CtxMorphS, TyS)), tuple4__CtxS_CtxMorphS_TyS_TyS((CtxS, CtxMorphS, TyS, TyS)), tuple2__CtxS_CtxS((CtxS, CtxS)), tuple3__CtxS_CtxS_CtxMorphS((CtxS, CtxS, CtxMorphS)), tuple5__CtxS_CtxS_CtxMorphS_CtxMorphS_TyS((CtxS, CtxS, CtxMorphS, CtxMorphS, TyS)), tuple4__CtxS_CtxS_TmS_TmS((CtxS, CtxS, TmS, TmS)), tuple8__CtxS_CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS((CtxS, CtxS, TmS, TmS, TmS, TmS, CtxMorphS, TyS)), tuple6__CtxS_CtxS_TmS_TmS_TyS_TyS((CtxS, CtxS, TmS, TmS, TyS, TyS)), tuple3__CtxS_CtxS_TyS((CtxS, CtxS, TyS)), tuple4__CtxS_CtxS_TyS_TyS((CtxS, CtxS, TyS, TyS)), tuple2__CtxS_TmS((CtxS, TmS)), tuple3__CtxS_TmS_CtxMorphS((CtxS, TmS, CtxMorphS)), tuple4__CtxS_TmS_CtxMorphS_TyS((CtxS, TmS, CtxMorphS, TyS)), tuple3__CtxS_TmS_TmS((CtxS, TmS, TmS)), tuple4__CtxS_TmS_TmS_CtxMorphS((CtxS, TmS, TmS, CtxMorphS)), tuple5__CtxS_TmS_TmS_CtxMorphS_TyS((CtxS, TmS, TmS, CtxMorphS, TyS)), tuple5__CtxS_TmS_TmS_TmS_CtxMorphS((CtxS, TmS, TmS, TmS, CtxMorphS)), tuple7__CtxS_TmS_TmS_TmS_CtxMorphS_CtxMorphS_TyS((CtxS, TmS, TmS, TmS, CtxMorphS, CtxMorphS, TyS)), tuple7__CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS((CtxS, TmS, TmS, TmS, TmS, CtxMorphS, TyS)), tuple5__CtxS_TmS_TmS_TmS_TyS((CtxS, TmS, TmS, TmS, TyS)), tuple4__CtxS_TmS_TmS_TyS((CtxS, TmS, TmS, TyS)), tuple5__CtxS_TmS_TmS_TyS_TyS((CtxS, TmS, TmS, TyS, TyS)), tuple3__CtxS_TmS_TyS((CtxS, TmS, TyS)), tuple2__CtxS_TyS((CtxS, TyS)), tuple3__CtxS_TyS_TyS((CtxS, TyS, TyS)), tuple2__TmS_CtxMorphS((TmS, CtxMorphS)), tuple3__TmS_CtxMorphS_CtxMorphS((TmS, CtxMorphS, CtxMorphS)), tuple4__TmS_CtxMorphS_CtxMorphS_CtxMorphS((TmS, CtxMorphS, CtxMorphS, CtxMorphS)), tuple4__TmS_CtxMorphS_CtxMorphS_TyS((TmS, CtxMorphS, CtxMorphS, TyS)), tuple3__TmS_CtxMorphS_TyS((TmS, CtxMorphS, TyS)), tuple2__TmS_TmS((TmS, TmS)), tuple3__TmS_TmS_CtxMorphS((TmS, TmS, CtxMorphS)), tuple4__TmS_TmS_CtxMorphS_CtxMorphS((TmS, TmS, CtxMorphS, CtxMorphS)), tuple4__TmS_TmS_CtxMorphS_TyS((TmS, TmS, CtxMorphS, TyS)), tuple5__TmS_TmS_CtxMorphS_TyS_TyS((TmS, TmS, CtxMorphS, TyS, TyS)), tuple3__TmS_TmS_TmS((TmS, TmS, TmS)), tuple4__TmS_TmS_TmS_CtxMorphS((TmS, TmS, TmS, CtxMorphS)), tuple5__TmS_TmS_TmS_CtxMorphS_CtxMorphS((TmS, TmS, TmS, CtxMorphS, CtxMorphS)), tuple5__TmS_TmS_TmS_TmS_CtxMorphS((TmS, TmS, TmS, TmS, CtxMorphS)), tuple4__TmS_TmS_TmS_TyS((TmS, TmS, TmS, TyS)), tuple3__TmS_TmS_TyS((TmS, TmS, TyS)), tuple4__TmS_TmS_TyS_TyS((TmS, TmS, TyS, TyS)), tuple2__TmS_TyS((TmS, TyS)), tuple2__TyS_CtxMorphS((TyS, CtxMorphS)), tuple3__TyS_CtxMorphS_TyS((TyS, CtxMorphS, TyS)), tuple2__TyS_CtxS((TyS, CtxS)), tuple2__TyS_TyS((TyS, TyS)), Bool(Bool), BoolElim(BoolElim), BoolElimInput(BoolElimInput), BoolInput(BoolInput), Comp(Comp), CompInput(CompInput), Comprehension(Comprehension), ComprehensionInput(ComprehensionInput), Ctx(Ctx), CtxEmpty(CtxEmpty), CtxEmptyInput(CtxEmptyInput), CtxEq(CtxEq), CtxEqInput(CtxEqInput), CtxInput(CtxInput), CtxMorph(CtxMorph), CtxMorphEq(CtxMorphEq), CtxMorphEqInput(CtxMorphEqInput), CtxMorphInput(CtxMorphInput), CtxMorphS(CtxMorphS), CtxS(CtxS), Extension(Extension), ExtensionInput(ExtensionInput), False(False), FalseInput(FalseInput), Id(Id), IdInput(IdInput), IdMorph(IdMorph), IdMorphInput(IdMorphInput), ProjCtx(ProjCtx), ProjCtxInput(ProjCtxInput), ProjTm(ProjTm), ProjTmInput(ProjTmInput), Refl(Refl), ReflInput(ReflInput), Tm(Tm), TmBar(TmBar), TmEq(TmEq), TmEqInput(TmEqInput), TmInput(TmInput), TmS(TmS), TmSubst(TmSubst), TmSubstInput(TmSubstInput), True(True), TrueInput(TrueInput), Ty(Ty), TyEq(TyEq), TyEqInput(TyEqInput), TyInput(TyInput), TyS(TyS), TySubst(TySubst), TySubstInput(TySubstInput), Weakening(Weakening));
+decl_val_enum_into_record!(Value, <>, tuple0__(x), tuple2__CtxMorphS_CtxMorphS(x), tuple3__CtxMorphS_CtxMorphS_CtxMorphS(x), tuple4__CtxMorphS_CtxMorphS_CtxMorphS_CtxMorphS(x), tuple3__CtxMorphS_CtxMorphS_TyS(x), tuple4__CtxMorphS_CtxMorphS_TyS_TyS(x), tuple2__CtxMorphS_CtxS(x), tuple3__CtxMorphS_CtxS_CtxS(x), tuple2__CtxMorphS_TmS(x), tuple2__CtxMorphS_TyS(x), tuple3__CtxMorphS_TyS_TyS(x), tuple2__CtxS_CtxMorphS(x), tuple3__CtxS_CtxMorphS_CtxMorphS(x), tuple4__CtxS_CtxMorphS_CtxMorphS_CtxMorphS(x), tuple4__CtxS_CtxMorphS_CtxMorphS_TyS(x), tuple5__CtxS_CtxMorphS_CtxMorphS_TyS_TyS(x), tuple3__CtxS_CtxMorphS_TyS(x), tuple4__CtxS_CtxMorphS_TyS_TyS(x), tuple2__CtxS_CtxS(x), tuple3__CtxS_CtxS_CtxMorphS(x), tuple5__CtxS_CtxS_CtxMorphS_CtxMorphS_TyS(x), tuple4__CtxS_CtxS_TmS_TmS(x), tuple6__CtxS_CtxS_TmS_TmS_TyS_TyS(x), tuple3__CtxS_CtxS_TyS(x), tuple4__CtxS_CtxS_TyS_TyS(x), tuple2__CtxS_TmS(x), tuple3__CtxS_TmS_CtxMorphS(x), tuple4__CtxS_TmS_CtxMorphS_TyS(x), tuple3__CtxS_TmS_TmS(x), tuple4__CtxS_TmS_TmS_CtxMorphS(x), tuple5__CtxS_TmS_TmS_CtxMorphS_TyS(x), tuple5__CtxS_TmS_TmS_TmS_CtxMorphS(x), tuple7__CtxS_TmS_TmS_TmS_CtxMorphS_CtxMorphS_TyS(x), tuple4__CtxS_TmS_TmS_TyS(x), tuple5__CtxS_TmS_TmS_TyS_TyS(x), tuple3__CtxS_TmS_TyS(x), tuple2__CtxS_TyS(x), tuple3__CtxS_TyS_TyS(x), tuple2__TmS_CtxMorphS(x), tuple3__TmS_CtxMorphS_CtxMorphS(x), tuple4__TmS_CtxMorphS_CtxMorphS_CtxMorphS(x), tuple4__TmS_CtxMorphS_CtxMorphS_TyS(x), tuple3__TmS_CtxMorphS_TyS(x), tuple2__TmS_TmS(x), tuple3__TmS_TmS_CtxMorphS(x), tuple4__TmS_TmS_CtxMorphS_CtxMorphS(x), tuple4__TmS_TmS_CtxMorphS_TyS(x), tuple5__TmS_TmS_CtxMorphS_TyS_TyS(x), tuple3__TmS_TmS_TmS(x), tuple4__TmS_TmS_TmS_CtxMorphS(x), tuple5__TmS_TmS_TmS_CtxMorphS_CtxMorphS(x), tuple5__TmS_TmS_TmS_TmS_CtxMorphS(x), tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(x), tuple3__TmS_TmS_TyS(x), tuple4__TmS_TmS_TyS_TyS(x), tuple2__TmS_TyS(x), tuple2__TyS_CtxMorphS(x), tuple3__TyS_CtxMorphS_TyS(x), tuple2__TyS_CtxS(x), tuple2__TyS_TyS(x), Bool(x), BoolElim(x), BoolElimInput(x), BoolInput(x), Comp(x), CompInput(x), Comprehension(x), ComprehensionInput(x), Ctx(x), CtxEmpty(x), CtxEmptyInput(x), CtxEq(x), CtxEqInput(x), CtxInput(x), CtxMorph(x), CtxMorphEq(x), CtxMorphEqInput(x), CtxMorphInput(x), CtxMorphS(x), CtxS(x), Extension(x), ExtensionInput(x), False(x), FalseInput(x), Id(x), IdInput(x), IdMorph(x), IdMorphInput(x), ProjCtx(x), ProjCtxInput(x), ProjTm(x), ProjTmInput(x), Refl(x), ReflInput(x), Tm(x), TmBar(x), TmEq(x), TmEqInput(x), TmInput(x), TmS(x), TmSubst(x), TmSubstInput(x), True(x), TrueInput(x), Ty(x), TyEq(x), TyEqInput(x), TyInput(x), TyS(x), TySubst(x), TySubstInput(x), Weakening(x));
+decl_record_mutator_val_enum!(Value, <>, tuple0__(()), tuple2__CtxMorphS_CtxMorphS((CtxMorphS, CtxMorphS)), tuple3__CtxMorphS_CtxMorphS_CtxMorphS((CtxMorphS, CtxMorphS, CtxMorphS)), tuple4__CtxMorphS_CtxMorphS_CtxMorphS_CtxMorphS((CtxMorphS, CtxMorphS, CtxMorphS, CtxMorphS)), tuple3__CtxMorphS_CtxMorphS_TyS((CtxMorphS, CtxMorphS, TyS)), tuple4__CtxMorphS_CtxMorphS_TyS_TyS((CtxMorphS, CtxMorphS, TyS, TyS)), tuple2__CtxMorphS_CtxS((CtxMorphS, CtxS)), tuple3__CtxMorphS_CtxS_CtxS((CtxMorphS, CtxS, CtxS)), tuple2__CtxMorphS_TmS((CtxMorphS, TmS)), tuple2__CtxMorphS_TyS((CtxMorphS, TyS)), tuple3__CtxMorphS_TyS_TyS((CtxMorphS, TyS, TyS)), tuple2__CtxS_CtxMorphS((CtxS, CtxMorphS)), tuple3__CtxS_CtxMorphS_CtxMorphS((CtxS, CtxMorphS, CtxMorphS)), tuple4__CtxS_CtxMorphS_CtxMorphS_CtxMorphS((CtxS, CtxMorphS, CtxMorphS, CtxMorphS)), tuple4__CtxS_CtxMorphS_CtxMorphS_TyS((CtxS, CtxMorphS, CtxMorphS, TyS)), tuple5__CtxS_CtxMorphS_CtxMorphS_TyS_TyS((CtxS, CtxMorphS, CtxMorphS, TyS, TyS)), tuple3__CtxS_CtxMorphS_TyS((CtxS, CtxMorphS, TyS)), tuple4__CtxS_CtxMorphS_TyS_TyS((CtxS, CtxMorphS, TyS, TyS)), tuple2__CtxS_CtxS((CtxS, CtxS)), tuple3__CtxS_CtxS_CtxMorphS((CtxS, CtxS, CtxMorphS)), tuple5__CtxS_CtxS_CtxMorphS_CtxMorphS_TyS((CtxS, CtxS, CtxMorphS, CtxMorphS, TyS)), tuple4__CtxS_CtxS_TmS_TmS((CtxS, CtxS, TmS, TmS)), tuple6__CtxS_CtxS_TmS_TmS_TyS_TyS((CtxS, CtxS, TmS, TmS, TyS, TyS)), tuple3__CtxS_CtxS_TyS((CtxS, CtxS, TyS)), tuple4__CtxS_CtxS_TyS_TyS((CtxS, CtxS, TyS, TyS)), tuple2__CtxS_TmS((CtxS, TmS)), tuple3__CtxS_TmS_CtxMorphS((CtxS, TmS, CtxMorphS)), tuple4__CtxS_TmS_CtxMorphS_TyS((CtxS, TmS, CtxMorphS, TyS)), tuple3__CtxS_TmS_TmS((CtxS, TmS, TmS)), tuple4__CtxS_TmS_TmS_CtxMorphS((CtxS, TmS, TmS, CtxMorphS)), tuple5__CtxS_TmS_TmS_CtxMorphS_TyS((CtxS, TmS, TmS, CtxMorphS, TyS)), tuple5__CtxS_TmS_TmS_TmS_CtxMorphS((CtxS, TmS, TmS, TmS, CtxMorphS)), tuple7__CtxS_TmS_TmS_TmS_CtxMorphS_CtxMorphS_TyS((CtxS, TmS, TmS, TmS, CtxMorphS, CtxMorphS, TyS)), tuple4__CtxS_TmS_TmS_TyS((CtxS, TmS, TmS, TyS)), tuple5__CtxS_TmS_TmS_TyS_TyS((CtxS, TmS, TmS, TyS, TyS)), tuple3__CtxS_TmS_TyS((CtxS, TmS, TyS)), tuple2__CtxS_TyS((CtxS, TyS)), tuple3__CtxS_TyS_TyS((CtxS, TyS, TyS)), tuple2__TmS_CtxMorphS((TmS, CtxMorphS)), tuple3__TmS_CtxMorphS_CtxMorphS((TmS, CtxMorphS, CtxMorphS)), tuple4__TmS_CtxMorphS_CtxMorphS_CtxMorphS((TmS, CtxMorphS, CtxMorphS, CtxMorphS)), tuple4__TmS_CtxMorphS_CtxMorphS_TyS((TmS, CtxMorphS, CtxMorphS, TyS)), tuple3__TmS_CtxMorphS_TyS((TmS, CtxMorphS, TyS)), tuple2__TmS_TmS((TmS, TmS)), tuple3__TmS_TmS_CtxMorphS((TmS, TmS, CtxMorphS)), tuple4__TmS_TmS_CtxMorphS_CtxMorphS((TmS, TmS, CtxMorphS, CtxMorphS)), tuple4__TmS_TmS_CtxMorphS_TyS((TmS, TmS, CtxMorphS, TyS)), tuple5__TmS_TmS_CtxMorphS_TyS_TyS((TmS, TmS, CtxMorphS, TyS, TyS)), tuple3__TmS_TmS_TmS((TmS, TmS, TmS)), tuple4__TmS_TmS_TmS_CtxMorphS((TmS, TmS, TmS, CtxMorphS)), tuple5__TmS_TmS_TmS_CtxMorphS_CtxMorphS((TmS, TmS, TmS, CtxMorphS, CtxMorphS)), tuple5__TmS_TmS_TmS_TmS_CtxMorphS((TmS, TmS, TmS, TmS, CtxMorphS)), tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS((TmS, TmS, TmS, TmS, CtxMorphS, CtxMorphS)), tuple3__TmS_TmS_TyS((TmS, TmS, TyS)), tuple4__TmS_TmS_TyS_TyS((TmS, TmS, TyS, TyS)), tuple2__TmS_TyS((TmS, TyS)), tuple2__TyS_CtxMorphS((TyS, CtxMorphS)), tuple3__TyS_CtxMorphS_TyS((TyS, CtxMorphS, TyS)), tuple2__TyS_CtxS((TyS, CtxS)), tuple2__TyS_TyS((TyS, TyS)), Bool(Bool), BoolElim(BoolElim), BoolElimInput(BoolElimInput), BoolInput(BoolInput), Comp(Comp), CompInput(CompInput), Comprehension(Comprehension), ComprehensionInput(ComprehensionInput), Ctx(Ctx), CtxEmpty(CtxEmpty), CtxEmptyInput(CtxEmptyInput), CtxEq(CtxEq), CtxEqInput(CtxEqInput), CtxInput(CtxInput), CtxMorph(CtxMorph), CtxMorphEq(CtxMorphEq), CtxMorphEqInput(CtxMorphEqInput), CtxMorphInput(CtxMorphInput), CtxMorphS(CtxMorphS), CtxS(CtxS), Extension(Extension), ExtensionInput(ExtensionInput), False(False), FalseInput(FalseInput), Id(Id), IdInput(IdInput), IdMorph(IdMorph), IdMorphInput(IdMorphInput), ProjCtx(ProjCtx), ProjCtxInput(ProjCtxInput), ProjTm(ProjTm), ProjTmInput(ProjTmInput), Refl(Refl), ReflInput(ReflInput), Tm(Tm), TmBar(TmBar), TmEq(TmEq), TmEqInput(TmEqInput), TmInput(TmInput), TmS(TmS), TmSubst(TmSubst), TmSubstInput(TmSubstInput), True(True), TrueInput(TrueInput), Ty(Ty), TyEq(TyEq), TyEqInput(TyEqInput), TyInput(TyInput), TyS(TyS), TySubst(TySubst), TySubstInput(TySubstInput), Weakening(Weakening));
 /* fn log_log(module: & log_module_t, level: & log_log_level_t, msg: & String) -> bool */
 /* fn std___builtin_2string<X: Eq + Ord + Clone + Hash + PartialEq + PartialOrd>(x: & X) -> String */
 /* fn std_deref<A: Eq + Ord + Clone + Hash + PartialEq + PartialOrd>(x: & std_Ref<A>) -> A */
@@ -6506,12 +6518,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                       next: Box::new(None)
                                   }
                        },
-                       /* TyEq(.l=s, .r=t) :- __Prefix_1[(_G, s, t)], Ty(.ty=t, .ctx=_G). */
+                       /* TyEq(.l=s, .r=t) :- __Prefix_2[(_G, s, t)], Ty(.ty=t, .ctx=_G). */
                        Rule::ArrangementRule {
-                           description: "TyEq(.l=s, .r=t) :- __Prefix_1[(_G, s, t)], Ty(.ty=t, .ctx=_G).".to_string(),
-                           arr: ( Relations::__Prefix_1 as RelId, 0),
+                           description: "TyEq(.l=s, .r=t) :- __Prefix_2[(_G, s, t)], Ty(.ty=t, .ctx=_G).".to_string(),
+                           arr: ( Relations::__Prefix_2 as RelId, 0),
                            xform: XFormArrangement::Semijoin{
-                                      description: "__Prefix_1[(_G, s, t)], Ty(.ty=t, .ctx=_G)".to_string(),
+                                      description: "__Prefix_2[(_G, s, t)], Ty(.ty=t, .ctx=_G)".to_string(),
                                       ffun: None,
                                       arrangement: (Relations::Ty as RelId,1),
                                       jfun: &{fn __f(_: &Value ,__v1: &Value,___v2: &()) -> Option<Value>
@@ -7078,12 +7090,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                       next: Box::new(None)
                                   }
                        },
-                       /* TmEq(.l=_M, .r=_N) :- __Prefix_6[(_M, s)], Refl(.tm=_N), Tm(.tm=_N, .ty=s). */
+                       /* TmEq(.l=_M, .r=_N) :- __Prefix_7[(_M, s)], Refl(.tm=_N), Tm(.tm=_N, .ty=s). */
                        Rule::ArrangementRule {
-                           description: "TmEq(.l=_M, .r=_N) :- __Prefix_6[(_M, s)], Refl(.tm=_N), Tm(.tm=_N, .ty=s).".to_string(),
-                           arr: ( Relations::__Prefix_6 as RelId, 1),
+                           description: "TmEq(.l=_M, .r=_N) :- __Prefix_7[(_M, s)], Refl(.tm=_N), Tm(.tm=_N, .ty=s).".to_string(),
+                           arr: ( Relations::__Prefix_7 as RelId, 1),
                            xform: XFormArrangement::Join{
-                                      description: "__Prefix_6[(_M, s)], Refl(.tm=_N)".to_string(),
+                                      description: "__Prefix_7[(_M, s)], Refl(.tm=_N)".to_string(),
                                       ffun: None,
                                       arrangement: (Relations::Refl as RelId,1),
                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -7110,7 +7122,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                       }
                                       __f},
                                       next: Box::new(Some(XFormCollection::Arrange {
-                                                              description: "arrange __Prefix_6[(_M, s)], Refl(.tm=_N) by (_N, s)" .to_string(),
+                                                              description: "arrange __Prefix_7[(_M, s)], Refl(.tm=_N) by (_N, s)" .to_string(),
                                                               afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                               {
                                                                   let (_M, _N, s) = match __v {
@@ -7126,7 +7138,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                               }
                                                               __f},
                                                               next: Box::new(XFormArrangement::Semijoin{
-                                                                                 description: "__Prefix_6[(_M, s)], Refl(.tm=_N), Tm(.tm=_N, .ty=s)".to_string(),
+                                                                                 description: "__Prefix_7[(_M, s)], Refl(.tm=_N), Tm(.tm=_N, .ty=s)".to_string(),
                                                                                  ffun: None,
                                                                                  arrangement: (Relations::Tm as RelId,2),
                                                                                  jfun: &{fn __f(_: &Value ,__v1: &Value,___v2: &()) -> Option<Value>
@@ -7148,12 +7160,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                           }))
                                   }
                        },
-                       /* TmEq(.l=_M, .r=_N) :- __Prefix_5[(_M, s)], True(.tm=_N), Tm(.tm=_N, .ty=s). */
+                       /* TmEq(.l=_M, .r=_N) :- __Prefix_6[(_M, s)], True(.tm=_N), Tm(.tm=_N, .ty=s). */
                        Rule::ArrangementRule {
-                           description: "TmEq(.l=_M, .r=_N) :- __Prefix_5[(_M, s)], True(.tm=_N), Tm(.tm=_N, .ty=s).".to_string(),
-                           arr: ( Relations::__Prefix_5 as RelId, 0),
+                           description: "TmEq(.l=_M, .r=_N) :- __Prefix_6[(_M, s)], True(.tm=_N), Tm(.tm=_N, .ty=s).".to_string(),
+                           arr: ( Relations::__Prefix_6 as RelId, 0),
                            xform: XFormArrangement::Join{
-                                      description: "__Prefix_5[(_M, s)], True(.tm=_N)".to_string(),
+                                      description: "__Prefix_6[(_M, s)], True(.tm=_N)".to_string(),
                                       ffun: None,
                                       arrangement: (Relations::True as RelId,1),
                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -7180,7 +7192,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                       }
                                       __f},
                                       next: Box::new(Some(XFormCollection::Arrange {
-                                                              description: "arrange __Prefix_5[(_M, s)], True(.tm=_N) by (_N, s)" .to_string(),
+                                                              description: "arrange __Prefix_6[(_M, s)], True(.tm=_N) by (_N, s)" .to_string(),
                                                               afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                               {
                                                                   let (_M, _N, s) = match __v {
@@ -7196,7 +7208,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                               }
                                                               __f},
                                                               next: Box::new(XFormArrangement::Semijoin{
-                                                                                 description: "__Prefix_5[(_M, s)], True(.tm=_N), Tm(.tm=_N, .ty=s)".to_string(),
+                                                                                 description: "__Prefix_6[(_M, s)], True(.tm=_N), Tm(.tm=_N, .ty=s)".to_string(),
                                                                                  ffun: None,
                                                                                  arrangement: (Relations::Tm as RelId,2),
                                                                                  jfun: &{fn __f(_: &Value ,__v1: &Value,___v2: &()) -> Option<Value>
@@ -7218,12 +7230,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                           }))
                                   }
                        },
-                       /* TmEq(.l=_M, .r=_N) :- __Prefix_4[(_M, s)], False(.tm=_N), Tm(.tm=_N, .ty=s). */
+                       /* TmEq(.l=_M, .r=_N) :- __Prefix_5[(_M, s)], False(.tm=_N), Tm(.tm=_N, .ty=s). */
                        Rule::ArrangementRule {
-                           description: "TmEq(.l=_M, .r=_N) :- __Prefix_4[(_M, s)], False(.tm=_N), Tm(.tm=_N, .ty=s).".to_string(),
-                           arr: ( Relations::__Prefix_4 as RelId, 1),
+                           description: "TmEq(.l=_M, .r=_N) :- __Prefix_5[(_M, s)], False(.tm=_N), Tm(.tm=_N, .ty=s).".to_string(),
+                           arr: ( Relations::__Prefix_5 as RelId, 1),
                            xform: XFormArrangement::Join{
-                                      description: "__Prefix_4[(_M, s)], False(.tm=_N)".to_string(),
+                                      description: "__Prefix_5[(_M, s)], False(.tm=_N)".to_string(),
                                       ffun: None,
                                       arrangement: (Relations::False as RelId,1),
                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -7250,7 +7262,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                       }
                                       __f},
                                       next: Box::new(Some(XFormCollection::Arrange {
-                                                              description: "arrange __Prefix_4[(_M, s)], False(.tm=_N) by (_N, s)" .to_string(),
+                                                              description: "arrange __Prefix_5[(_M, s)], False(.tm=_N) by (_N, s)" .to_string(),
                                                               afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                               {
                                                                   let (_M, _N, s) = match __v {
@@ -7266,7 +7278,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                               }
                                                               __f},
                                                               next: Box::new(XFormArrangement::Semijoin{
-                                                                                 description: "__Prefix_4[(_M, s)], False(.tm=_N), Tm(.tm=_N, .ty=s)".to_string(),
+                                                                                 description: "__Prefix_5[(_M, s)], False(.tm=_N), Tm(.tm=_N, .ty=s)".to_string(),
                                                                                  ffun: None,
                                                                                  arrangement: (Relations::Tm as RelId,2),
                                                                                  jfun: &{fn __f(_: &Value ,__v1: &Value,___v2: &()) -> Option<Value>
@@ -8197,23 +8209,6 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                }
                                __f},
                                queryable: false
-                           },
-                           Arrangement::Map{
-                              name: r###"BoolElim{.trueCase=_, .falseCase=_, .tm=_0}"###.to_string(),
-                               afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
-                               {
-                                   let __cloned = __v.clone();
-                                   {
-                                       if let Value::BoolElim(__box) = __v {
-                                           match __box {
-                                           BoolElim{trueCase: _, falseCase: _, tm: ref _0} => Some(Value::TmS(_0.clone())),
-                                           _ => None
-                                           }
-                                       } else { None }
-                                   }.map(|x|(x,__cloned))
-                               }
-                               __f},
-                               queryable: false
                            }],
                        change_cb:    Some(sync::Arc::new(sync::Mutex::new(__update_cb.clone())))
                    };
@@ -8655,12 +8650,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                }))
                                        }
                             },
-                            /* Extension(.f=f, .tm=_N, .e=e) :- __Prefix_2[(_G, _M, p, s)], Comp(.g=p, .f=e, .gf=f), TmSubst(.tm=_M, .f=e, .sub=_N). */
+                            /* Extension(.f=f, .tm=_N, .e=e) :- __Prefix_3[(_G, _M, p, s)], Comp(.g=p, .f=e, .gf=f), TmSubst(.tm=_M, .f=e, .sub=_N). */
                             Rule::ArrangementRule {
-                                description: "Extension(.f=f, .tm=_N, .e=e) :- __Prefix_2[(_G, _M, p, s)], Comp(.g=p, .f=e, .gf=f), TmSubst(.tm=_M, .f=e, .sub=_N).".to_string(),
-                                arr: ( Relations::__Prefix_2 as RelId, 0),
+                                description: "Extension(.f=f, .tm=_N, .e=e) :- __Prefix_3[(_G, _M, p, s)], Comp(.g=p, .f=e, .gf=f), TmSubst(.tm=_M, .f=e, .sub=_N).".to_string(),
+                                arr: ( Relations::__Prefix_3 as RelId, 0),
                                 xform: XFormArrangement::Join{
-                                           description: "__Prefix_2[(_G, _M, p, s)], Comp(.g=p, .f=e, .gf=f)".to_string(),
+                                           description: "__Prefix_3[(_G, _M, p, s)], Comp(.g=p, .f=e, .gf=f)".to_string(),
                                            ffun: None,
                                            arrangement: (Relations::Comp as RelId,0),
                                            jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -8687,7 +8682,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                            }
                                            __f},
                                            next: Box::new(Some(XFormCollection::Arrange {
-                                                                   description: "arrange __Prefix_2[(_G, _M, p, s)], Comp(.g=p, .f=e, .gf=f) by (_M, e)" .to_string(),
+                                                                   description: "arrange __Prefix_3[(_G, _M, p, s)], Comp(.g=p, .f=e, .gf=f) by (_M, e)" .to_string(),
                                                                    afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                    {
                                                                        let (_M, e, f) = match __v {
@@ -8703,7 +8698,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                    }
                                                                    __f},
                                                                    next: Box::new(XFormArrangement::Join{
-                                                                                      description: "__Prefix_2[(_G, _M, p, s)], Comp(.g=p, .f=e, .gf=f), TmSubst(.tm=_M, .f=e, .sub=_N)".to_string(),
+                                                                                      description: "__Prefix_3[(_G, _M, p, s)], Comp(.g=p, .f=e, .gf=f), TmSubst(.tm=_M, .f=e, .sub=_N)".to_string(),
                                                                                       ffun: None,
                                                                                       arrangement: (Relations::TmSubst as RelId,2),
                                                                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -8976,12 +8971,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                           }))
                                   }
                        },
-                       /* Comp(.g=g, .f=id, .gf=g) :- __Prefix_3[(ctx, id)], CtxMorph(.f=g, .from=ctx, .to=_). */
+                       /* Comp(.g=g, .f=id, .gf=g) :- __Prefix_4[(ctx, id)], CtxMorph(.f=g, .from=ctx, .to=_). */
                        Rule::ArrangementRule {
-                           description: "Comp(.g=g, .f=id, .gf=g) :- __Prefix_3[(ctx, id)], CtxMorph(.f=g, .from=ctx, .to=_).".to_string(),
-                           arr: ( Relations::__Prefix_3 as RelId, 0),
+                           description: "Comp(.g=g, .f=id, .gf=g) :- __Prefix_4[(ctx, id)], CtxMorph(.f=g, .from=ctx, .to=_).".to_string(),
+                           arr: ( Relations::__Prefix_4 as RelId, 0),
                            xform: XFormArrangement::Join{
-                                      description: "__Prefix_3[(ctx, id)], CtxMorph(.f=g, .from=ctx, .to=_)".to_string(),
+                                      description: "__Prefix_4[(ctx, id)], CtxMorph(.f=g, .from=ctx, .to=_)".to_string(),
                                       ffun: None,
                                       arrangement: (Relations::CtxMorph as RelId,2),
                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -9010,12 +9005,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                       next: Box::new(None)
                                   }
                        },
-                       /* Comp(.g=id, .f=f, .gf=f) :- __Prefix_3[(ctx, id)], CtxMorph(.f=f, .from=_, .to=ctx). */
+                       /* Comp(.g=id, .f=f, .gf=f) :- __Prefix_4[(ctx, id)], CtxMorph(.f=f, .from=_, .to=ctx). */
                        Rule::ArrangementRule {
-                           description: "Comp(.g=id, .f=f, .gf=f) :- __Prefix_3[(ctx, id)], CtxMorph(.f=f, .from=_, .to=ctx).".to_string(),
-                           arr: ( Relations::__Prefix_3 as RelId, 0),
+                           description: "Comp(.g=id, .f=f, .gf=f) :- __Prefix_4[(ctx, id)], CtxMorph(.f=f, .from=_, .to=ctx).".to_string(),
+                           arr: ( Relations::__Prefix_4 as RelId, 0),
                            xform: XFormArrangement::Join{
-                                      description: "__Prefix_3[(ctx, id)], CtxMorph(.f=f, .from=_, .to=ctx)".to_string(),
+                                      description: "__Prefix_4[(ctx, id)], CtxMorph(.f=f, .from=_, .to=ctx)".to_string(),
                                       ffun: None,
                                       arrangement: (Relations::CtxMorph as RelId,0),
                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -10095,12 +10090,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                          next: Box::new(None)
                                      }
                           },
-                          /* IdMorph(.f=e) :- __Prefix_2[(_G, _M, p, s)], Extension(.f=p, .tm=_M, .e=e). */
+                          /* IdMorph(.f=e) :- __Prefix_3[(_G, _M, p, s)], Extension(.f=p, .tm=_M, .e=e). */
                           Rule::ArrangementRule {
-                              description: "IdMorph(.f=e) :- __Prefix_2[(_G, _M, p, s)], Extension(.f=p, .tm=_M, .e=e).".to_string(),
-                              arr: ( Relations::__Prefix_2 as RelId, 1),
+                              description: "IdMorph(.f=e) :- __Prefix_3[(_G, _M, p, s)], Extension(.f=p, .tm=_M, .e=e).".to_string(),
+                              arr: ( Relations::__Prefix_3 as RelId, 1),
                               xform: XFormArrangement::Join{
-                                         description: "__Prefix_2[(_G, _M, p, s)], Extension(.f=p, .tm=_M, .e=e)".to_string(),
+                                         description: "__Prefix_3[(_G, _M, p, s)], Extension(.f=p, .tm=_M, .e=e)".to_string(),
                                          ffun: None,
                                          arrangement: (Relations::Extension as RelId,3),
                                          jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -10166,16 +10161,16 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                           }],
                       change_cb:    Some(sync::Arc::new(sync::Mutex::new(__update_cb.clone())))
                   };
-    let __Prefix_2 = Relation {
-                         name:         "__Prefix_2".to_string(),
+    let __Prefix_3 = Relation {
+                         name:         "__Prefix_3".to_string(),
                          input:        false,
                          distinct:     false,
                          key_func:     None,
-                         id:           Relations::__Prefix_2 as RelId,
+                         id:           Relations::__Prefix_3 as RelId,
                          rules:        vec![
-                             /* __Prefix_2[(_G, _M, p, s)] :- ProjCtx(.ctx=_G, .ty=s, .f=p), ProjTm(.ctx=_G, .ty=s, .tm=_M). */
+                             /* __Prefix_3[(_G, _M, p, s)] :- ProjCtx(.ctx=_G, .ty=s, .f=p), ProjTm(.ctx=_G, .ty=s, .tm=_M). */
                              Rule::ArrangementRule {
-                                 description: "__Prefix_2[(_G, _M, p, s)] :- ProjCtx(.ctx=_G, .ty=s, .f=p), ProjTm(.ctx=_G, .ty=s, .tm=_M).".to_string(),
+                                 description: "__Prefix_3[(_G, _M, p, s)] :- ProjCtx(.ctx=_G, .ty=s, .f=p), ProjTm(.ctx=_G, .ty=s, .tm=_M).".to_string(),
                                  arr: ( Relations::ProjCtx as RelId, 1),
                                  xform: XFormArrangement::Join{
                                             description: "ProjCtx(.ctx=_G, .ty=s, .f=p), ProjTm(.ctx=_G, .ty=s, .tm=_M)".to_string(),
@@ -11273,12 +11268,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                              }))
                                      }
                           },
-                          /* TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TySubst(.ty=t, .f=f, .sub=s). */
+                          /* TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TySubst(.ty=t, .f=f, .sub=s). */
                           Rule::ArrangementRule {
-                              description: "TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TySubst(.ty=t, .f=f, .sub=s).".to_string(),
-                              arr: ( Relations::__Prefix_6 as RelId, 0),
+                              description: "TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TySubst(.ty=t, .f=f, .sub=s).".to_string(),
+                              arr: ( Relations::__Prefix_7 as RelId, 0),
                               xform: XFormArrangement::Join{
-                                         description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G)".to_string(),
+                                         description: "__Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G)".to_string(),
                                          ffun: None,
                                          arrangement: (Relations::Ty as RelId,0),
                                          jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -11305,7 +11300,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                          }
                                          __f},
                                          next: Box::new(Some(XFormCollection::Arrange {
-                                                                 description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G) by ()" .to_string(),
+                                                                 description: "arrange __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G) by ()" .to_string(),
                                                                  afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                  {
                                                                      let (_G, _M, s) = match __v {
@@ -11321,7 +11316,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                  }
                                                                  __f},
                                                                  next: Box::new(XFormArrangement::Join{
-                                                                                    description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N)".to_string(),
+                                                                                    description: "__Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N)".to_string(),
                                                                                     ffun: None,
                                                                                     arrangement: (Relations::Refl as RelId,1),
                                                                                     jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -11348,7 +11343,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                     }
                                                                                     __f},
                                                                                     next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                            description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N) by (_N)" .to_string(),
+                                                                                                            description: "arrange __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N) by (_N)" .to_string(),
                                                                                                             afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                                                             {
                                                                                                                 let (_G, _M, _N, s) = match __v {
@@ -11364,7 +11359,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                             }
                                                                                                             __f},
                                                                                                             next: Box::new(XFormArrangement::Join{
-                                                                                                                               description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t)".to_string(),
+                                                                                                                               description: "__Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t)".to_string(),
                                                                                                                                ffun: None,
                                                                                                                                arrangement: (Relations::Tm as RelId,1),
                                                                                                                                jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -11391,7 +11386,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                                                }
                                                                                                                                __f},
                                                                                                                                next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                                                                       description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t) by (t)" .to_string(),
+                                                                                                                                                       description: "arrange __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t) by (t)" .to_string(),
                                                                                                                                                        afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                                                                                                        {
                                                                                                                                                            let (_G, _M, _N, s, t) = match __v {
@@ -11407,7 +11402,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                                                                        }
                                                                                                                                                        __f},
                                                                                                                                                        next: Box::new(XFormArrangement::Join{
-                                                                                                                                                                          description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D)".to_string(),
+                                                                                                                                                                          description: "__Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D)".to_string(),
                                                                                                                                                                           ffun: None,
                                                                                                                                                                           arrangement: (Relations::Ty as RelId,0),
                                                                                                                                                                           jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -11434,7 +11429,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                                                                                           }
                                                                                                                                                                           __f},
                                                                                                                                                                           next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                                                                                                                  description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D) by (_G, _D)" .to_string(),
+                                                                                                                                                                                                  description: "arrange __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D) by (_G, _D)" .to_string(),
                                                                                                                                                                                                   afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                                                                                                                                                   {
                                                                                                                                                                                                       let (_D, _G, _M, _N, s, t) = match __v {
@@ -11450,7 +11445,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                                                                                                                   }
                                                                                                                                                                                                   __f},
                                                                                                                                                                                                   next: Box::new(XFormArrangement::Join{
-                                                                                                                                                                                                                     description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
+                                                                                                                                                                                                                     description: "__Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
                                                                                                                                                                                                                      ffun: None,
                                                                                                                                                                                                                      arrangement: (Relations::CtxMorph as RelId,6),
                                                                                                                                                                                                                      jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -11477,7 +11472,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                                                                                                                                      }
                                                                                                                                                                                                                      __f},
                                                                                                                                                                                                                      next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                                                                                                                                                             description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D) by (t, f, s)" .to_string(),
+                                                                                                                                                                                                                                             description: "arrange __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D) by (t, f, s)" .to_string(),
                                                                                                                                                                                                                                              afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                                                                                                                                                                                              {
                                                                                                                                                                                                                                                  let (_M, _N, f, s, t) = match __v {
@@ -11493,7 +11488,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                                                                                                                                                              }
                                                                                                                                                                                                                                              __f},
                                                                                                                                                                                                                                              next: Box::new(XFormArrangement::Semijoin{
-                                                                                                                                                                                                                                                                description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TySubst(.ty=t, .f=f, .sub=s)".to_string(),
+                                                                                                                                                                                                                                                                description: "__Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_G), Refl(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TySubst(.ty=t, .f=f, .sub=s)".to_string(),
                                                                                                                                                                                                                                                                 ffun: None,
                                                                                                                                                                                                                                                                 arrangement: (Relations::TySubst as RelId,2),
                                                                                                                                                                                                                                                                 jfun: &{fn __f(_: &Value ,__v1: &Value,___v2: &()) -> Option<Value>
@@ -11523,10 +11518,224 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                              }))
                                      }
                           },
-                          /* TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D). */
+                          /* TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D). */
                           Rule::ArrangementRule {
-                              description: "TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D).".to_string(),
-                              arr: ( Relations::__Prefix_5 as RelId, 1),
+                              description: "TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D).".to_string(),
+                              arr: ( Relations::__Prefix_6 as RelId, 1),
+                              xform: XFormArrangement::Join{
+                                         description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G)".to_string(),
+                                         ffun: None,
+                                         arrangement: (Relations::Ty as RelId,0),
+                                         jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
+                                         {
+                                             let (_M, s) = match *__v1{
+                                                 Value::tuple2__TmS_TyS(ref __box) => {
+                                                     match *__box {
+                                                     (ref _M, ref s) => (_M, s),
+                                                     _ => return None
+                                                     }
+                                                 },
+                                                 _ => return None
+                                             };
+                                             let _G = match *__v2{
+                                                 Value::Ty(ref __box) => {
+                                                     match *__box {
+                                                     Ty{ty: _, ctx: ref _G} => _G,
+                                                     _ => return None
+                                                     }
+                                                 },
+                                                 _ => return None
+                                             };
+                                             Some(Value::tuple2__CtxS_TmS((_G.clone(), _M.clone())))
+                                         }
+                                         __f},
+                                         next: Box::new(Some(XFormCollection::Arrange {
+                                                                 description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G) by ()" .to_string(),
+                                                                 afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
+                                                                 {
+                                                                     let (_G, _M) = match __v {
+                                                                         Value::tuple2__CtxS_TmS(ref __box) => {
+                                                                             match *__box {
+                                                                                 (ref _G, ref _M) => (_G, _M),
+                                                                                 _ => unreachable!(),
+                                                                             }
+                                                                         },
+                                                                         _ => unreachable!()
+                                                                     };
+                                                                     Some((Value::tuple0__(()), Value::tuple2__CtxS_TmS((_G.clone(), _M.clone()))))
+                                                                 }
+                                                                 __f},
+                                                                 next: Box::new(XFormArrangement::Join{
+                                                                                    description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N)".to_string(),
+                                                                                    ffun: None,
+                                                                                    arrangement: (Relations::True as RelId,1),
+                                                                                    jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
+                                                                                    {
+                                                                                        let (_G, _M) = match *__v1 {
+                                                                                            Value::tuple2__CtxS_TmS(ref __box) => {
+                                                                                                match *__box {
+                                                                                                    (ref _G, ref _M) => (_G, _M),
+                                                                                                    _ => unreachable!(),
+                                                                                                }
+                                                                                            },
+                                                                                            _ => unreachable!()
+                                                                                        };
+                                                                                        let _N = match *__v2{
+                                                                                            Value::True(ref __box) => {
+                                                                                                match *__box {
+                                                                                                True{tm: ref _N} => _N,
+                                                                                                _ => return None
+                                                                                                }
+                                                                                            },
+                                                                                            _ => return None
+                                                                                        };
+                                                                                        Some(Value::tuple3__CtxS_TmS_TmS((_G.clone(), _M.clone(), _N.clone())))
+                                                                                    }
+                                                                                    __f},
+                                                                                    next: Box::new(Some(XFormCollection::Arrange {
+                                                                                                            description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N) by (_N)" .to_string(),
+                                                                                                            afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
+                                                                                                            {
+                                                                                                                let (_G, _M, _N) = match __v {
+                                                                                                                    Value::tuple3__CtxS_TmS_TmS(ref __box) => {
+                                                                                                                        match *__box {
+                                                                                                                            (ref _G, ref _M, ref _N) => (_G, _M, _N),
+                                                                                                                            _ => unreachable!(),
+                                                                                                                        }
+                                                                                                                    },
+                                                                                                                    _ => unreachable!()
+                                                                                                                };
+                                                                                                                Some((Value::TmS(_N.clone()), Value::tuple3__CtxS_TmS_TmS((_G.clone(), _M.clone(), _N.clone()))))
+                                                                                                            }
+                                                                                                            __f},
+                                                                                                            next: Box::new(XFormArrangement::Join{
+                                                                                                                               description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t)".to_string(),
+                                                                                                                               ffun: None,
+                                                                                                                               arrangement: (Relations::Tm as RelId,1),
+                                                                                                                               jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
+                                                                                                                               {
+                                                                                                                                   let (_G, _M, _N) = match *__v1 {
+                                                                                                                                       Value::tuple3__CtxS_TmS_TmS(ref __box) => {
+                                                                                                                                           match *__box {
+                                                                                                                                               (ref _G, ref _M, ref _N) => (_G, _M, _N),
+                                                                                                                                               _ => unreachable!(),
+                                                                                                                                           }
+                                                                                                                                       },
+                                                                                                                                       _ => unreachable!()
+                                                                                                                                   };
+                                                                                                                                   let t = match *__v2{
+                                                                                                                                       Value::Tm(ref __box) => {
+                                                                                                                                           match *__box {
+                                                                                                                                           Tm{tm: _, ty: ref t} => t,
+                                                                                                                                           _ => return None
+                                                                                                                                           }
+                                                                                                                                       },
+                                                                                                                                       _ => return None
+                                                                                                                                   };
+                                                                                                                                   Some(Value::tuple4__CtxS_TmS_TmS_TyS((_G.clone(), _M.clone(), _N.clone(), t.clone())))
+                                                                                                                               }
+                                                                                                                               __f},
+                                                                                                                               next: Box::new(Some(XFormCollection::Arrange {
+                                                                                                                                                       description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t) by (t)" .to_string(),
+                                                                                                                                                       afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
+                                                                                                                                                       {
+                                                                                                                                                           let (_G, _M, _N, t) = match __v {
+                                                                                                                                                               Value::tuple4__CtxS_TmS_TmS_TyS(ref __box) => {
+                                                                                                                                                                   match *__box {
+                                                                                                                                                                       (ref _G, ref _M, ref _N, ref t) => (_G, _M, _N, t),
+                                                                                                                                                                       _ => unreachable!(),
+                                                                                                                                                                   }
+                                                                                                                                                               },
+                                                                                                                                                               _ => unreachable!()
+                                                                                                                                                           };
+                                                                                                                                                           Some((Value::TyS(t.clone()), Value::tuple3__CtxS_TmS_TmS((_G.clone(), _M.clone(), _N.clone()))))
+                                                                                                                                                       }
+                                                                                                                                                       __f},
+                                                                                                                                                       next: Box::new(XFormArrangement::Join{
+                                                                                                                                                                          description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D)".to_string(),
+                                                                                                                                                                          ffun: None,
+                                                                                                                                                                          arrangement: (Relations::Ty as RelId,0),
+                                                                                                                                                                          jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
+                                                                                                                                                                          {
+                                                                                                                                                                              let (_G, _M, _N) = match *__v1 {
+                                                                                                                                                                                  Value::tuple3__CtxS_TmS_TmS(ref __box) => {
+                                                                                                                                                                                      match *__box {
+                                                                                                                                                                                          (ref _G, ref _M, ref _N) => (_G, _M, _N),
+                                                                                                                                                                                          _ => unreachable!(),
+                                                                                                                                                                                      }
+                                                                                                                                                                                  },
+                                                                                                                                                                                  _ => unreachable!()
+                                                                                                                                                                              };
+                                                                                                                                                                              let _D = match *__v2{
+                                                                                                                                                                                  Value::Ty(ref __box) => {
+                                                                                                                                                                                      match *__box {
+                                                                                                                                                                                      Ty{ty: _, ctx: ref _D} => _D,
+                                                                                                                                                                                      _ => return None
+                                                                                                                                                                                      }
+                                                                                                                                                                                  },
+                                                                                                                                                                                  _ => return None
+                                                                                                                                                                              };
+                                                                                                                                                                              Some(Value::tuple4__CtxS_CtxS_TmS_TmS((_D.clone(), _G.clone(), _M.clone(), _N.clone())))
+                                                                                                                                                                          }
+                                                                                                                                                                          __f},
+                                                                                                                                                                          next: Box::new(Some(XFormCollection::Arrange {
+                                                                                                                                                                                                  description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D) by (_G, _D)" .to_string(),
+                                                                                                                                                                                                  afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
+                                                                                                                                                                                                  {
+                                                                                                                                                                                                      let (_D, _G, _M, _N) = match __v {
+                                                                                                                                                                                                          Value::tuple4__CtxS_CtxS_TmS_TmS(ref __box) => {
+                                                                                                                                                                                                              match *__box {
+                                                                                                                                                                                                                  (ref _D, ref _G, ref _M, ref _N) => (_D, _G, _M, _N),
+                                                                                                                                                                                                                  _ => unreachable!(),
+                                                                                                                                                                                                              }
+                                                                                                                                                                                                          },
+                                                                                                                                                                                                          _ => unreachable!()
+                                                                                                                                                                                                      };
+                                                                                                                                                                                                      Some((Value::tuple2__CtxS_CtxS((_G.clone(), _D.clone())), Value::tuple2__TmS_TmS((_M.clone(), _N.clone()))))
+                                                                                                                                                                                                  }
+                                                                                                                                                                                                  __f},
+                                                                                                                                                                                                  next: Box::new(XFormArrangement::Join{
+                                                                                                                                                                                                                     description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
+                                                                                                                                                                                                                     ffun: None,
+                                                                                                                                                                                                                     arrangement: (Relations::CtxMorph as RelId,6),
+                                                                                                                                                                                                                     jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
+                                                                                                                                                                                                                     {
+                                                                                                                                                                                                                         let (_M, _N) = match *__v1 {
+                                                                                                                                                                                                                             Value::tuple2__TmS_TmS(ref __box) => {
+                                                                                                                                                                                                                                 match *__box {
+                                                                                                                                                                                                                                     (ref _M, ref _N) => (_M, _N),
+                                                                                                                                                                                                                                     _ => unreachable!(),
+                                                                                                                                                                                                                                 }
+                                                                                                                                                                                                                             },
+                                                                                                                                                                                                                             _ => unreachable!()
+                                                                                                                                                                                                                         };
+                                                                                                                                                                                                                         let f = match *__v2{
+                                                                                                                                                                                                                             Value::CtxMorph(ref __box) => {
+                                                                                                                                                                                                                                 match *__box {
+                                                                                                                                                                                                                                 CtxMorph{f: ref f, from: _, to: _} => f,
+                                                                                                                                                                                                                                 _ => return None
+                                                                                                                                                                                                                                 }
+                                                                                                                                                                                                                             },
+                                                                                                                                                                                                                             _ => return None
+                                                                                                                                                                                                                         };
+                                                                                                                                                                                                                         Some(Value::TmSubst(TmSubst{tm: _N.clone(), f: f.clone(), sub: _M.clone()}))
+                                                                                                                                                                                                                     }
+                                                                                                                                                                                                                     __f},
+                                                                                                                                                                                                                     next: Box::new(None)
+                                                                                                                                                                                                                 })
+                                                                                                                                                                                              }))
+                                                                                                                                                                      })
+                                                                                                                                                   }))
+                                                                                                                           })
+                                                                                                        }))
+                                                                                })
+                                                             }))
+                                     }
+                          },
+                          /* TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D). */
+                          Rule::ArrangementRule {
+                              description: "TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D).".to_string(),
+                              arr: ( Relations::__Prefix_5 as RelId, 0),
                               xform: XFormArrangement::Join{
                                          description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G)".to_string(),
                                          ffun: None,
@@ -11571,221 +11780,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                  }
                                                                  __f},
                                                                  next: Box::new(XFormArrangement::Join{
-                                                                                    description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N)".to_string(),
-                                                                                    ffun: None,
-                                                                                    arrangement: (Relations::True as RelId,1),
-                                                                                    jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
-                                                                                    {
-                                                                                        let (_G, _M) = match *__v1 {
-                                                                                            Value::tuple2__CtxS_TmS(ref __box) => {
-                                                                                                match *__box {
-                                                                                                    (ref _G, ref _M) => (_G, _M),
-                                                                                                    _ => unreachable!(),
-                                                                                                }
-                                                                                            },
-                                                                                            _ => unreachable!()
-                                                                                        };
-                                                                                        let _N = match *__v2{
-                                                                                            Value::True(ref __box) => {
-                                                                                                match *__box {
-                                                                                                True{tm: ref _N} => _N,
-                                                                                                _ => return None
-                                                                                                }
-                                                                                            },
-                                                                                            _ => return None
-                                                                                        };
-                                                                                        Some(Value::tuple3__CtxS_TmS_TmS((_G.clone(), _M.clone(), _N.clone())))
-                                                                                    }
-                                                                                    __f},
-                                                                                    next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                            description: "arrange __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N) by (_N)" .to_string(),
-                                                                                                            afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
-                                                                                                            {
-                                                                                                                let (_G, _M, _N) = match __v {
-                                                                                                                    Value::tuple3__CtxS_TmS_TmS(ref __box) => {
-                                                                                                                        match *__box {
-                                                                                                                            (ref _G, ref _M, ref _N) => (_G, _M, _N),
-                                                                                                                            _ => unreachable!(),
-                                                                                                                        }
-                                                                                                                    },
-                                                                                                                    _ => unreachable!()
-                                                                                                                };
-                                                                                                                Some((Value::TmS(_N.clone()), Value::tuple3__CtxS_TmS_TmS((_G.clone(), _M.clone(), _N.clone()))))
-                                                                                                            }
-                                                                                                            __f},
-                                                                                                            next: Box::new(XFormArrangement::Join{
-                                                                                                                               description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t)".to_string(),
-                                                                                                                               ffun: None,
-                                                                                                                               arrangement: (Relations::Tm as RelId,1),
-                                                                                                                               jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
-                                                                                                                               {
-                                                                                                                                   let (_G, _M, _N) = match *__v1 {
-                                                                                                                                       Value::tuple3__CtxS_TmS_TmS(ref __box) => {
-                                                                                                                                           match *__box {
-                                                                                                                                               (ref _G, ref _M, ref _N) => (_G, _M, _N),
-                                                                                                                                               _ => unreachable!(),
-                                                                                                                                           }
-                                                                                                                                       },
-                                                                                                                                       _ => unreachable!()
-                                                                                                                                   };
-                                                                                                                                   let t = match *__v2{
-                                                                                                                                       Value::Tm(ref __box) => {
-                                                                                                                                           match *__box {
-                                                                                                                                           Tm{tm: _, ty: ref t} => t,
-                                                                                                                                           _ => return None
-                                                                                                                                           }
-                                                                                                                                       },
-                                                                                                                                       _ => return None
-                                                                                                                                   };
-                                                                                                                                   Some(Value::tuple4__CtxS_TmS_TmS_TyS((_G.clone(), _M.clone(), _N.clone(), t.clone())))
-                                                                                                                               }
-                                                                                                                               __f},
-                                                                                                                               next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                                                                       description: "arrange __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t) by (t)" .to_string(),
-                                                                                                                                                       afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
-                                                                                                                                                       {
-                                                                                                                                                           let (_G, _M, _N, t) = match __v {
-                                                                                                                                                               Value::tuple4__CtxS_TmS_TmS_TyS(ref __box) => {
-                                                                                                                                                                   match *__box {
-                                                                                                                                                                       (ref _G, ref _M, ref _N, ref t) => (_G, _M, _N, t),
-                                                                                                                                                                       _ => unreachable!(),
-                                                                                                                                                                   }
-                                                                                                                                                               },
-                                                                                                                                                               _ => unreachable!()
-                                                                                                                                                           };
-                                                                                                                                                           Some((Value::TyS(t.clone()), Value::tuple3__CtxS_TmS_TmS((_G.clone(), _M.clone(), _N.clone()))))
-                                                                                                                                                       }
-                                                                                                                                                       __f},
-                                                                                                                                                       next: Box::new(XFormArrangement::Join{
-                                                                                                                                                                          description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D)".to_string(),
-                                                                                                                                                                          ffun: None,
-                                                                                                                                                                          arrangement: (Relations::Ty as RelId,0),
-                                                                                                                                                                          jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
-                                                                                                                                                                          {
-                                                                                                                                                                              let (_G, _M, _N) = match *__v1 {
-                                                                                                                                                                                  Value::tuple3__CtxS_TmS_TmS(ref __box) => {
-                                                                                                                                                                                      match *__box {
-                                                                                                                                                                                          (ref _G, ref _M, ref _N) => (_G, _M, _N),
-                                                                                                                                                                                          _ => unreachable!(),
-                                                                                                                                                                                      }
-                                                                                                                                                                                  },
-                                                                                                                                                                                  _ => unreachable!()
-                                                                                                                                                                              };
-                                                                                                                                                                              let _D = match *__v2{
-                                                                                                                                                                                  Value::Ty(ref __box) => {
-                                                                                                                                                                                      match *__box {
-                                                                                                                                                                                      Ty{ty: _, ctx: ref _D} => _D,
-                                                                                                                                                                                      _ => return None
-                                                                                                                                                                                      }
-                                                                                                                                                                                  },
-                                                                                                                                                                                  _ => return None
-                                                                                                                                                                              };
-                                                                                                                                                                              Some(Value::tuple4__CtxS_CtxS_TmS_TmS((_D.clone(), _G.clone(), _M.clone(), _N.clone())))
-                                                                                                                                                                          }
-                                                                                                                                                                          __f},
-                                                                                                                                                                          next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                                                                                                                  description: "arrange __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D) by (_G, _D)" .to_string(),
-                                                                                                                                                                                                  afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
-                                                                                                                                                                                                  {
-                                                                                                                                                                                                      let (_D, _G, _M, _N) = match __v {
-                                                                                                                                                                                                          Value::tuple4__CtxS_CtxS_TmS_TmS(ref __box) => {
-                                                                                                                                                                                                              match *__box {
-                                                                                                                                                                                                                  (ref _D, ref _G, ref _M, ref _N) => (_D, _G, _M, _N),
-                                                                                                                                                                                                                  _ => unreachable!(),
-                                                                                                                                                                                                              }
-                                                                                                                                                                                                          },
-                                                                                                                                                                                                          _ => unreachable!()
-                                                                                                                                                                                                      };
-                                                                                                                                                                                                      Some((Value::tuple2__CtxS_CtxS((_G.clone(), _D.clone())), Value::tuple2__TmS_TmS((_M.clone(), _N.clone()))))
-                                                                                                                                                                                                  }
-                                                                                                                                                                                                  __f},
-                                                                                                                                                                                                  next: Box::new(XFormArrangement::Join{
-                                                                                                                                                                                                                     description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), True(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
-                                                                                                                                                                                                                     ffun: None,
-                                                                                                                                                                                                                     arrangement: (Relations::CtxMorph as RelId,6),
-                                                                                                                                                                                                                     jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
-                                                                                                                                                                                                                     {
-                                                                                                                                                                                                                         let (_M, _N) = match *__v1 {
-                                                                                                                                                                                                                             Value::tuple2__TmS_TmS(ref __box) => {
-                                                                                                                                                                                                                                 match *__box {
-                                                                                                                                                                                                                                     (ref _M, ref _N) => (_M, _N),
-                                                                                                                                                                                                                                     _ => unreachable!(),
-                                                                                                                                                                                                                                 }
-                                                                                                                                                                                                                             },
-                                                                                                                                                                                                                             _ => unreachable!()
-                                                                                                                                                                                                                         };
-                                                                                                                                                                                                                         let f = match *__v2{
-                                                                                                                                                                                                                             Value::CtxMorph(ref __box) => {
-                                                                                                                                                                                                                                 match *__box {
-                                                                                                                                                                                                                                 CtxMorph{f: ref f, from: _, to: _} => f,
-                                                                                                                                                                                                                                 _ => return None
-                                                                                                                                                                                                                                 }
-                                                                                                                                                                                                                             },
-                                                                                                                                                                                                                             _ => return None
-                                                                                                                                                                                                                         };
-                                                                                                                                                                                                                         Some(Value::TmSubst(TmSubst{tm: _N.clone(), f: f.clone(), sub: _M.clone()}))
-                                                                                                                                                                                                                     }
-                                                                                                                                                                                                                     __f},
-                                                                                                                                                                                                                     next: Box::new(None)
-                                                                                                                                                                                                                 })
-                                                                                                                                                                                              }))
-                                                                                                                                                                      })
-                                                                                                                                                   }))
-                                                                                                                           })
-                                                                                                        }))
-                                                                                })
-                                                             }))
-                                     }
-                          },
-                          /* TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D). */
-                          Rule::ArrangementRule {
-                              description: "TmSubst(.tm=_N, .f=f, .sub=_M) :- __Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D).".to_string(),
-                              arr: ( Relations::__Prefix_4 as RelId, 0),
-                              xform: XFormArrangement::Join{
-                                         description: "__Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G)".to_string(),
-                                         ffun: None,
-                                         arrangement: (Relations::Ty as RelId,0),
-                                         jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
-                                         {
-                                             let (_M, s) = match *__v1{
-                                                 Value::tuple2__TmS_TyS(ref __box) => {
-                                                     match *__box {
-                                                     (ref _M, ref s) => (_M, s),
-                                                     _ => return None
-                                                     }
-                                                 },
-                                                 _ => return None
-                                             };
-                                             let _G = match *__v2{
-                                                 Value::Ty(ref __box) => {
-                                                     match *__box {
-                                                     Ty{ty: _, ctx: ref _G} => _G,
-                                                     _ => return None
-                                                     }
-                                                 },
-                                                 _ => return None
-                                             };
-                                             Some(Value::tuple2__CtxS_TmS((_G.clone(), _M.clone())))
-                                         }
-                                         __f},
-                                         next: Box::new(Some(XFormCollection::Arrange {
-                                                                 description: "arrange __Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G) by ()" .to_string(),
-                                                                 afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
-                                                                 {
-                                                                     let (_G, _M) = match __v {
-                                                                         Value::tuple2__CtxS_TmS(ref __box) => {
-                                                                             match *__box {
-                                                                                 (ref _G, ref _M) => (_G, _M),
-                                                                                 _ => unreachable!(),
-                                                                             }
-                                                                         },
-                                                                         _ => unreachable!()
-                                                                     };
-                                                                     Some((Value::tuple0__(()), Value::tuple2__CtxS_TmS((_G.clone(), _M.clone()))))
-                                                                 }
-                                                                 __f},
-                                                                 next: Box::new(XFormArrangement::Join{
-                                                                                    description: "__Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N)".to_string(),
+                                                                                    description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N)".to_string(),
                                                                                     ffun: None,
                                                                                     arrangement: (Relations::False as RelId,1),
                                                                                     jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -11812,7 +11807,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                     }
                                                                                     __f},
                                                                                     next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                            description: "arrange __Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N) by (_N)" .to_string(),
+                                                                                                            description: "arrange __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N) by (_N)" .to_string(),
                                                                                                             afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                                                             {
                                                                                                                 let (_G, _M, _N) = match __v {
@@ -11828,7 +11823,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                             }
                                                                                                             __f},
                                                                                                             next: Box::new(XFormArrangement::Join{
-                                                                                                                               description: "__Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t)".to_string(),
+                                                                                                                               description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t)".to_string(),
                                                                                                                                ffun: None,
                                                                                                                                arrangement: (Relations::Tm as RelId,1),
                                                                                                                                jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -11855,7 +11850,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                                                }
                                                                                                                                __f},
                                                                                                                                next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                                                                       description: "arrange __Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t) by (t)" .to_string(),
+                                                                                                                                                       description: "arrange __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t) by (t)" .to_string(),
                                                                                                                                                        afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                                                                                                        {
                                                                                                                                                            let (_G, _M, _N, t) = match __v {
@@ -11871,7 +11866,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                                                                        }
                                                                                                                                                        __f},
                                                                                                                                                        next: Box::new(XFormArrangement::Join{
-                                                                                                                                                                          description: "__Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D)".to_string(),
+                                                                                                                                                                          description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D)".to_string(),
                                                                                                                                                                           ffun: None,
                                                                                                                                                                           arrangement: (Relations::Ty as RelId,0),
                                                                                                                                                                           jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -11898,7 +11893,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                                                                                           }
                                                                                                                                                                           __f},
                                                                                                                                                                           next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                                                                                                                  description: "arrange __Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D) by (_G, _D)" .to_string(),
+                                                                                                                                                                                                  description: "arrange __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D) by (_G, _D)" .to_string(),
                                                                                                                                                                                                   afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                                                                                                                                                   {
                                                                                                                                                                                                       let (_D, _G, _M, _N) = match __v {
@@ -11914,7 +11909,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                                                                                                                   }
                                                                                                                                                                                                   __f},
                                                                                                                                                                                                   next: Box::new(XFormArrangement::Join{
-                                                                                                                                                                                                                     description: "__Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
+                                                                                                                                                                                                                     description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_G), False(.tm=_N), Tm(.tm=_N, .ty=t), Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
                                                                                                                                                                                                                      ffun: None,
                                                                                                                                                                                                                      arrangement: (Relations::CtxMorph as RelId,6),
                                                                                                                                                                                                                      jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -12246,69 +12241,137 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                              }))
                                      }
                           },
-                          /* TmSubst(.tm=_O, .f=f, .sub=_M) :- __Prefix_0[(_D, _G, _M, _N, _O, _P, f, s)], True(.tm=_P). */
+                          /* TmSubst(.tm=_M, .f=f, .sub=_Q) :- __Prefix_1[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_O, .f=e, .sub=_Q). */
                           Rule::ArrangementRule {
-                              description: "TmSubst(.tm=_O, .f=f, .sub=_M) :- __Prefix_0[(_D, _G, _M, _N, _O, _P, f, s)], True(.tm=_P).".to_string(),
-                              arr: ( Relations::__Prefix_0 as RelId, 0),
+                              description: "TmSubst(.tm=_M, .f=f, .sub=_Q) :- __Prefix_1[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_O, .f=e, .sub=_Q).".to_string(),
+                              arr: ( Relations::__Prefix_1 as RelId, 0),
                               xform: XFormArrangement::Join{
-                                         description: "__Prefix_0[(_D, _G, _M, _N, _O, _P, f, s)], True(.tm=_P)".to_string(),
+                                         description: "__Prefix_1[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_O, .f=e, .sub=_Q)".to_string(),
                                          ffun: None,
-                                         arrangement: (Relations::True as RelId,0),
+                                         arrangement: (Relations::TmSubst as RelId,2),
                                          jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
                                          {
-                                             let (_D, _G, _M, _N, _O, _P, f, s) = match *__v1{
-                                                 Value::tuple8__CtxS_CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(ref __box) => {
+                                             let (_M, _N, _O, _P, e, f) = match *__v1{
+                                                 Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(ref __box) => {
                                                      match **__box {
-                                                     (ref _D, ref _G, ref _M, ref _N, ref _O, ref _P, ref f, ref s) => (_D, _G, _M, _N, _O, _P, f, s),
+                                                     (ref _M, ref _N, ref _O, ref _P, ref e, ref f) => (_M, _N, _O, _P, e, f),
                                                      _ => return None
                                                      }
                                                  },
                                                  _ => return None
                                              };
-                                             let () = match *__v2{
-                                                 Value::True(ref __box) => {
+                                             let _Q = match *__v2{
+                                                 Value::TmSubst(ref __box) => {
                                                      match *__box {
-                                                     True{tm: _} => (),
+                                                     TmSubst{tm: _, f: _, sub: ref _Q} => _Q,
                                                      _ => return None
                                                      }
                                                  },
                                                  _ => return None
                                              };
-                                             Some(Value::TmSubst(TmSubst{tm: _O.clone(), f: f.clone(), sub: _M.clone()}))
+                                             Some(Value::TmSubst(TmSubst{tm: _M.clone(), f: f.clone(), sub: _Q.clone()}))
                                          }
                                          __f},
                                          next: Box::new(None)
                                      }
                           },
-                          /* TmSubst(.tm=_O, .f=f, .sub=_N) :- __Prefix_0[(_D, _G, _M, _N, _O, _P, f, s)], False(.tm=_P). */
+                          /* TmSubst(.tm=_O, .f=e, .sub=_Q) :- __Prefix_1[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_M, .f=f, .sub=_Q). */
                           Rule::ArrangementRule {
-                              description: "TmSubst(.tm=_O, .f=f, .sub=_N) :- __Prefix_0[(_D, _G, _M, _N, _O, _P, f, s)], False(.tm=_P).".to_string(),
-                              arr: ( Relations::__Prefix_0 as RelId, 0),
+                              description: "TmSubst(.tm=_O, .f=e, .sub=_Q) :- __Prefix_1[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_M, .f=f, .sub=_Q).".to_string(),
+                              arr: ( Relations::__Prefix_1 as RelId, 1),
                               xform: XFormArrangement::Join{
-                                         description: "__Prefix_0[(_D, _G, _M, _N, _O, _P, f, s)], False(.tm=_P)".to_string(),
+                                         description: "__Prefix_1[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_M, .f=f, .sub=_Q)".to_string(),
                                          ffun: None,
-                                         arrangement: (Relations::False as RelId,0),
+                                         arrangement: (Relations::TmSubst as RelId,2),
                                          jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
                                          {
-                                             let (_D, _G, _M, _N, _O, _P, f, s) = match *__v1{
-                                                 Value::tuple8__CtxS_CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(ref __box) => {
+                                             let (_M, _N, _O, _P, e, f) = match *__v1{
+                                                 Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(ref __box) => {
                                                      match **__box {
-                                                     (ref _D, ref _G, ref _M, ref _N, ref _O, ref _P, ref f, ref s) => (_D, _G, _M, _N, _O, _P, f, s),
+                                                     (ref _M, ref _N, ref _O, ref _P, ref e, ref f) => (_M, _N, _O, _P, e, f),
                                                      _ => return None
                                                      }
                                                  },
                                                  _ => return None
                                              };
-                                             let () = match *__v2{
-                                                 Value::False(ref __box) => {
+                                             let _Q = match *__v2{
+                                                 Value::TmSubst(ref __box) => {
                                                      match *__box {
-                                                     False{tm: _} => (),
+                                                     TmSubst{tm: _, f: _, sub: ref _Q} => _Q,
                                                      _ => return None
                                                      }
                                                  },
                                                  _ => return None
                                              };
-                                             Some(Value::TmSubst(TmSubst{tm: _O.clone(), f: f.clone(), sub: _N.clone()}))
+                                             Some(Value::TmSubst(TmSubst{tm: _O.clone(), f: e.clone(), sub: _Q.clone()}))
+                                         }
+                                         __f},
+                                         next: Box::new(None)
+                                     }
+                          },
+                          /* TmSubst(.tm=_N, .f=f, .sub=_Q) :- __Prefix_0[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_O, .f=e, .sub=_Q). */
+                          Rule::ArrangementRule {
+                              description: "TmSubst(.tm=_N, .f=f, .sub=_Q) :- __Prefix_0[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_O, .f=e, .sub=_Q).".to_string(),
+                              arr: ( Relations::__Prefix_0 as RelId, 0),
+                              xform: XFormArrangement::Join{
+                                         description: "__Prefix_0[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_O, .f=e, .sub=_Q)".to_string(),
+                                         ffun: None,
+                                         arrangement: (Relations::TmSubst as RelId,2),
+                                         jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
+                                         {
+                                             let (_M, _N, _O, _P, e, f) = match *__v1{
+                                                 Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(ref __box) => {
+                                                     match **__box {
+                                                     (ref _M, ref _N, ref _O, ref _P, ref e, ref f) => (_M, _N, _O, _P, e, f),
+                                                     _ => return None
+                                                     }
+                                                 },
+                                                 _ => return None
+                                             };
+                                             let _Q = match *__v2{
+                                                 Value::TmSubst(ref __box) => {
+                                                     match *__box {
+                                                     TmSubst{tm: _, f: _, sub: ref _Q} => _Q,
+                                                     _ => return None
+                                                     }
+                                                 },
+                                                 _ => return None
+                                             };
+                                             Some(Value::TmSubst(TmSubst{tm: _N.clone(), f: f.clone(), sub: _Q.clone()}))
+                                         }
+                                         __f},
+                                         next: Box::new(None)
+                                     }
+                          },
+                          /* TmSubst(.tm=_O, .f=e, .sub=_Q) :- __Prefix_0[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_N, .f=f, .sub=_Q). */
+                          Rule::ArrangementRule {
+                              description: "TmSubst(.tm=_O, .f=e, .sub=_Q) :- __Prefix_0[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_N, .f=f, .sub=_Q).".to_string(),
+                              arr: ( Relations::__Prefix_0 as RelId, 1),
+                              xform: XFormArrangement::Join{
+                                         description: "__Prefix_0[(_M, _N, _O, _P, e, f)], TmSubst(.tm=_N, .f=f, .sub=_Q)".to_string(),
+                                         ffun: None,
+                                         arrangement: (Relations::TmSubst as RelId,2),
+                                         jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
+                                         {
+                                             let (_M, _N, _O, _P, e, f) = match *__v1{
+                                                 Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(ref __box) => {
+                                                     match **__box {
+                                                     (ref _M, ref _N, ref _O, ref _P, ref e, ref f) => (_M, _N, _O, _P, e, f),
+                                                     _ => return None
+                                                     }
+                                                 },
+                                                 _ => return None
+                                             };
+                                             let _Q = match *__v2{
+                                                 Value::TmSubst(ref __box) => {
+                                                     match *__box {
+                                                     TmSubst{tm: _, f: _, sub: ref _Q} => _Q,
+                                                     _ => return None
+                                                     }
+                                                 },
+                                                 _ => return None
+                                             };
+                                             Some(Value::TmSubst(TmSubst{tm: _O.clone(), f: e.clone(), sub: _Q.clone()}))
                                          }
                                          __f},
                                          next: Box::new(None)
@@ -12466,12 +12529,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                        next: Box::new(None)
                                    }
                         },
-                        /* False(.tm=_O) :- __Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O). */
+                        /* False(.tm=_O) :- __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O). */
                         Rule::ArrangementRule {
-                            description: "False(.tm=_O) :- __Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O).".to_string(),
-                            arr: ( Relations::__Prefix_4 as RelId, 0),
+                            description: "False(.tm=_O) :- __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O).".to_string(),
+                            arr: ( Relations::__Prefix_5 as RelId, 0),
                             xform: XFormArrangement::Join{
-                                       description: "__Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_D)".to_string(),
+                                       description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D)".to_string(),
                                        ffun: None,
                                        arrangement: (Relations::Ty as RelId,0),
                                        jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -12498,7 +12561,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                        }
                                        __f},
                                        next: Box::new(Some(XFormCollection::Arrange {
-                                                               description: "arrange __Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_D) by (_D)" .to_string(),
+                                                               description: "arrange __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D) by (_D)" .to_string(),
                                                                afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                {
                                                                    let (_D, _M) = match __v {
@@ -12514,7 +12577,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                }
                                                                __f},
                                                                next: Box::new(XFormArrangement::Join{
-                                                                                  description: "__Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
+                                                                                  description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
                                                                                   ffun: None,
                                                                                   arrangement: (Relations::CtxMorph as RelId,0),
                                                                                   jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -12541,7 +12604,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                   }
                                                                                   __f},
                                                                                   next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                          description: "arrange __Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D) by (_M, f)" .to_string(),
+                                                                                                          description: "arrange __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D) by (_M, f)" .to_string(),
                                                                                                           afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                                                           {
                                                                                                               let (_M, f) = match __v {
@@ -12557,7 +12620,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                           }
                                                                                                           __f},
                                                                                                           next: Box::new(XFormArrangement::Join{
-                                                                                                                             description: "__Prefix_4[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O)".to_string(),
+                                                                                                                             description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O)".to_string(),
                                                                                                                              ffun: None,
                                                                                                                              arrangement: (Relations::TmSubst as RelId,2),
                                                                                                                              jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -12789,16 +12852,16 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                      }],
                  change_cb:    Some(sync::Arc::new(sync::Mutex::new(__update_cb.clone())))
              };
-    let __Prefix_4 = Relation {
-                         name:         "__Prefix_4".to_string(),
+    let __Prefix_5 = Relation {
+                         name:         "__Prefix_5".to_string(),
                          input:        false,
                          distinct:     false,
                          key_func:     None,
-                         id:           Relations::__Prefix_4 as RelId,
+                         id:           Relations::__Prefix_5 as RelId,
                          rules:        vec![
-                             /* __Prefix_4[(_M, s)] :- False(.tm=_M), Tm(.tm=_M, .ty=s). */
+                             /* __Prefix_5[(_M, s)] :- False(.tm=_M), Tm(.tm=_M, .ty=s). */
                              Rule::ArrangementRule {
-                                 description: "__Prefix_4[(_M, s)] :- False(.tm=_M), Tm(.tm=_M, .ty=s).".to_string(),
+                                 description: "__Prefix_5[(_M, s)] :- False(.tm=_M), Tm(.tm=_M, .ty=s).".to_string(),
                                  arr: ( Relations::False as RelId, 0),
                                  xform: XFormArrangement::Join{
                                             description: "False(.tm=_M), Tm(.tm=_M, .ty=s)".to_string(),
@@ -13093,12 +13156,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                       next: Box::new(None)
                                   }
                        },
-                       /* Refl(.tm=_O) :- __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O). */
+                       /* Refl(.tm=_O) :- __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O). */
                        Rule::ArrangementRule {
-                           description: "Refl(.tm=_O) :- __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O).".to_string(),
-                           arr: ( Relations::__Prefix_6 as RelId, 0),
+                           description: "Refl(.tm=_O) :- __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O).".to_string(),
+                           arr: ( Relations::__Prefix_7 as RelId, 0),
                            xform: XFormArrangement::Join{
-                                      description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D)".to_string(),
+                                      description: "__Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_D)".to_string(),
                                       ffun: None,
                                       arrangement: (Relations::Ty as RelId,0),
                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -13125,7 +13188,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                       }
                                       __f},
                                       next: Box::new(Some(XFormCollection::Arrange {
-                                                              description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D) by (_D)" .to_string(),
+                                                              description: "arrange __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_D) by (_D)" .to_string(),
                                                               afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                               {
                                                                   let (_D, _M) = match __v {
@@ -13141,7 +13204,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                               }
                                                               __f},
                                                               next: Box::new(XFormArrangement::Join{
-                                                                                 description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
+                                                                                 description: "__Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
                                                                                  ffun: None,
                                                                                  arrangement: (Relations::CtxMorph as RelId,0),
                                                                                  jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -13168,7 +13231,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                  }
                                                                                  __f},
                                                                                  next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                         description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D) by (_M, f)" .to_string(),
+                                                                                                         description: "arrange __Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D) by (_M, f)" .to_string(),
                                                                                                          afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                                                          {
                                                                                                              let (_M, f) = match __v {
@@ -13184,7 +13247,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                          }
                                                                                                          __f},
                                                                                                          next: Box::new(XFormArrangement::Join{
-                                                                                                                            description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O)".to_string(),
+                                                                                                                            description: "__Prefix_7[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O)".to_string(),
                                                                                                                             ffun: None,
                                                                                                                             arrangement: (Relations::TmSubst as RelId,2),
                                                                                                                             jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -13288,16 +13351,16 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                        }],
                    change_cb:    Some(sync::Arc::new(sync::Mutex::new(__update_cb.clone())))
                };
-    let __Prefix_6 = Relation {
-                         name:         "__Prefix_6".to_string(),
+    let __Prefix_7 = Relation {
+                         name:         "__Prefix_7".to_string(),
                          input:        false,
                          distinct:     false,
                          key_func:     None,
-                         id:           Relations::__Prefix_6 as RelId,
+                         id:           Relations::__Prefix_7 as RelId,
                          rules:        vec![
-                             /* __Prefix_6[(_M, s)] :- Refl(.tm=_M), Tm(.tm=_M, .ty=s). */
+                             /* __Prefix_7[(_M, s)] :- Refl(.tm=_M), Tm(.tm=_M, .ty=s). */
                              Rule::ArrangementRule {
-                                 description: "__Prefix_6[(_M, s)] :- Refl(.tm=_M), Tm(.tm=_M, .ty=s).".to_string(),
+                                 description: "__Prefix_7[(_M, s)] :- Refl(.tm=_M), Tm(.tm=_M, .ty=s).".to_string(),
                                  arr: ( Relations::Refl as RelId, 0),
                                  xform: XFormArrangement::Join{
                                             description: "Refl(.tm=_M), Tm(.tm=_M, .ty=s)".to_string(),
@@ -13430,12 +13493,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                       next: Box::new(None)
                                   }
                        },
-                       /* True(.tm=_O) :- __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O). */
+                       /* True(.tm=_O) :- __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O). */
                        Rule::ArrangementRule {
-                           description: "True(.tm=_O) :- __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O).".to_string(),
-                           arr: ( Relations::__Prefix_5 as RelId, 1),
+                           description: "True(.tm=_O) :- __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O).".to_string(),
+                           arr: ( Relations::__Prefix_6 as RelId, 1),
                            xform: XFormArrangement::Join{
-                                      description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D)".to_string(),
+                                      description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D)".to_string(),
                                       ffun: None,
                                       arrangement: (Relations::Ty as RelId,0),
                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -13462,7 +13525,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                       }
                                       __f},
                                       next: Box::new(Some(XFormCollection::Arrange {
-                                                              description: "arrange __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D) by (_D)" .to_string(),
+                                                              description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D) by (_D)" .to_string(),
                                                               afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                               {
                                                                   let (_D, _M) = match __v {
@@ -13478,7 +13541,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                               }
                                                               __f},
                                                               next: Box::new(XFormArrangement::Join{
-                                                                                 description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
+                                                                                 description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
                                                                                  ffun: None,
                                                                                  arrangement: (Relations::CtxMorph as RelId,0),
                                                                                  jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -13505,7 +13568,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                  }
                                                                                  __f},
                                                                                  next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                         description: "arrange __Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D) by (_M, f)" .to_string(),
+                                                                                                         description: "arrange __Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D) by (_M, f)" .to_string(),
                                                                                                          afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                                                          {
                                                                                                              let (_M, f) = match __v {
@@ -13521,7 +13584,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                                                          }
                                                                                                          __f},
                                                                                                          next: Box::new(XFormArrangement::Join{
-                                                                                                                            description: "__Prefix_5[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O)".to_string(),
+                                                                                                                            description: "__Prefix_6[(_M, s)], Ty(.ty=s, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D), TmSubst(.tm=_M, .f=f, .sub=_O)".to_string(),
                                                                                                                             ffun: None,
                                                                                                                             arrangement: (Relations::TmSubst as RelId,2),
                                                                                                                             jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -13591,16 +13654,16 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                        }],
                    change_cb:    Some(sync::Arc::new(sync::Mutex::new(__update_cb.clone())))
                };
-    let __Prefix_5 = Relation {
-                         name:         "__Prefix_5".to_string(),
+    let __Prefix_6 = Relation {
+                         name:         "__Prefix_6".to_string(),
                          input:        false,
                          distinct:     false,
                          key_func:     None,
-                         id:           Relations::__Prefix_5 as RelId,
+                         id:           Relations::__Prefix_6 as RelId,
                          rules:        vec![
-                             /* __Prefix_5[(_M, s)] :- True(.tm=_M), Tm(.tm=_M, .ty=s). */
+                             /* __Prefix_6[(_M, s)] :- True(.tm=_M), Tm(.tm=_M, .ty=s). */
                              Rule::ArrangementRule {
-                                 description: "__Prefix_5[(_M, s)] :- True(.tm=_M), Tm(.tm=_M, .ty=s).".to_string(),
+                                 description: "__Prefix_6[(_M, s)] :- True(.tm=_M), Tm(.tm=_M, .ty=s).".to_string(),
                                  arr: ( Relations::True as RelId, 0),
                                  xform: XFormArrangement::Join{
                                             description: "True(.tm=_M), Tm(.tm=_M, .ty=s)".to_string(),
@@ -14175,12 +14238,12 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                              }))
                                      }
                           },
-                          /* TySubst(.ty=t, .f=f, .sub=s) :- __Prefix_1[(_G, s, t)], Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D). */
+                          /* TySubst(.ty=t, .f=f, .sub=s) :- __Prefix_2[(_G, s, t)], Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D). */
                           Rule::ArrangementRule {
-                              description: "TySubst(.ty=t, .f=f, .sub=s) :- __Prefix_1[(_G, s, t)], Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D).".to_string(),
-                              arr: ( Relations::__Prefix_1 as RelId, 1),
+                              description: "TySubst(.ty=t, .f=f, .sub=s) :- __Prefix_2[(_G, s, t)], Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D).".to_string(),
+                              arr: ( Relations::__Prefix_2 as RelId, 1),
                               xform: XFormArrangement::Join{
-                                         description: "__Prefix_1[(_G, s, t)], Ty(.ty=t, .ctx=_D)".to_string(),
+                                         description: "__Prefix_2[(_G, s, t)], Ty(.ty=t, .ctx=_D)".to_string(),
                                          ffun: None,
                                          arrangement: (Relations::Ty as RelId,0),
                                          jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -14207,7 +14270,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                          }
                                          __f},
                                          next: Box::new(Some(XFormCollection::Arrange {
-                                                                 description: "arrange __Prefix_1[(_G, s, t)], Ty(.ty=t, .ctx=_D) by (_G, _D)" .to_string(),
+                                                                 description: "arrange __Prefix_2[(_G, s, t)], Ty(.ty=t, .ctx=_D) by (_G, _D)" .to_string(),
                                                                  afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                                                  {
                                                                      let (_D, _G, s, t) = match __v {
@@ -14223,7 +14286,7 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                                  }
                                                                  __f},
                                                                  next: Box::new(XFormArrangement::Join{
-                                                                                    description: "__Prefix_1[(_G, s, t)], Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
+                                                                                    description: "__Prefix_2[(_G, s, t)], Ty(.ty=t, .ctx=_D), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
                                                                                     ffun: None,
                                                                                     arrangement: (Relations::CtxMorph as RelId,6),
                                                                                     jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
@@ -14341,16 +14404,16 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                           }],
                       change_cb:    Some(sync::Arc::new(sync::Mutex::new(__update_cb.clone())))
                   };
-    let __Prefix_1 = Relation {
-                         name:         "__Prefix_1".to_string(),
+    let __Prefix_2 = Relation {
+                         name:         "__Prefix_2".to_string(),
                          input:        false,
                          distinct:     false,
                          key_func:     None,
-                         id:           Relations::__Prefix_1 as RelId,
+                         id:           Relations::__Prefix_2 as RelId,
                          rules:        vec![
-                             /* __Prefix_1[(_G, s, t)] :- Bool(.ty=s), Ty(.ty=s, .ctx=_G), Bool(.ty=t). */
+                             /* __Prefix_2[(_G, s, t)] :- Bool(.ty=s), Ty(.ty=s, .ctx=_G), Bool(.ty=t). */
                              Rule::ArrangementRule {
-                                 description: "__Prefix_1[(_G, s, t)] :- Bool(.ty=s), Ty(.ty=s, .ctx=_G), Bool(.ty=t).".to_string(),
+                                 description: "__Prefix_2[(_G, s, t)] :- Bool(.ty=s), Ty(.ty=s, .ctx=_G), Bool(.ty=t).".to_string(),
                                  arr: ( Relations::Bool as RelId, 0),
                                  xform: XFormArrangement::Join{
                                             description: "Bool(.ty=s), Ty(.ty=s, .ctx=_G)".to_string(),
@@ -14712,14 +14775,92 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                          key_func:     None,
                          id:           Relations::__Prefix_0 as RelId,
                          rules:        vec![
-                             /* __Prefix_0[(_D, _G, _M, _N, _O, _P, f, s)] :- BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Tm(.tm=_O, .ty=s), Ty(.ty=s, .ctx=_D), TmBar(.tm=_P, .f=f), CtxMorph(.f=f, .from=_G, .to=_D). */
+                             /* __Prefix_0[(_M, _N, _O, _P, e, f)] :- __Prefix_8[(_M, _N, _O, _P, e, f)], False(.tm=_P). */
                              Rule::ArrangementRule {
-                                 description: "__Prefix_0[(_D, _G, _M, _N, _O, _P, f, s)] :- BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Tm(.tm=_O, .ty=s), Ty(.ty=s, .ctx=_D), TmBar(.tm=_P, .f=f), CtxMorph(.f=f, .from=_G, .to=_D).".to_string(),
-                                 arr: ( Relations::BoolElim as RelId, 3),
+                                 description: "__Prefix_0[(_M, _N, _O, _P, e, f)] :- __Prefix_8[(_M, _N, _O, _P, e, f)], False(.tm=_P).".to_string(),
+                                 arr: ( Relations::__Prefix_8 as RelId, 0),
                                  xform: XFormArrangement::Join{
-                                            description: "BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Tm(.tm=_O, .ty=s)".to_string(),
+                                            description: "__Prefix_8[(_M, _N, _O, _P, e, f)], False(.tm=_P)".to_string(),
                                             ffun: None,
-                                            arrangement: (Relations::Tm as RelId,1),
+                                            arrangement: (Relations::False as RelId,0),
+                                            jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
+                                            {
+                                                let (_M, _N, _O, _P, e, f) = match *__v1{
+                                                    Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(ref __box) => {
+                                                        match **__box {
+                                                        (ref _M, ref _N, ref _O, ref _P, ref e, ref f) => (_M, _N, _O, _P, e, f),
+                                                        _ => return None
+                                                        }
+                                                    },
+                                                    _ => return None
+                                                };
+                                                let () = match *__v2{
+                                                    Value::False(ref __box) => {
+                                                        match *__box {
+                                                        False{tm: _} => (),
+                                                        _ => return None
+                                                        }
+                                                    },
+                                                    _ => return None
+                                                };
+                                                Some(Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(boxed::Box::new((_M.clone(), _N.clone(), _O.clone(), _P.clone(), e.clone(), f.clone()))))
+                                            }
+                                            __f},
+                                            next: Box::new(None)
+                                        }
+                             }],
+                         arrangements: vec![
+                             Arrangement::Map{
+                                name: r###"(_, _, _0, _, _1, _)"###.to_string(),
+                                 afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
+                                 {
+                                     let __cloned = __v.clone();
+                                     {
+                                         if let Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(__box) = __v {
+                                             match *__box {
+                                             (_, _, ref _0, _, ref _1, _) => Some(Value::tuple2__TmS_CtxMorphS((_0.clone(), _1.clone()))),
+                                             _ => None
+                                             }
+                                         } else { None }
+                                     }.map(|x|(x,__cloned))
+                                 }
+                                 __f},
+                                 queryable: false
+                             },
+                             Arrangement::Map{
+                                name: r###"(_, _0, _, _, _, _1)"###.to_string(),
+                                 afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
+                                 {
+                                     let __cloned = __v.clone();
+                                     {
+                                         if let Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(__box) = __v {
+                                             match *__box {
+                                             (_, ref _0, _, _, _, ref _1) => Some(Value::tuple2__TmS_CtxMorphS((_0.clone(), _1.clone()))),
+                                             _ => None
+                                             }
+                                         } else { None }
+                                     }.map(|x|(x,__cloned))
+                                 }
+                                 __f},
+                                 queryable: false
+                             }],
+                         change_cb:    None
+                     };
+    let __Prefix_8 = Relation {
+                         name:         "__Prefix_8".to_string(),
+                         input:        false,
+                         distinct:     false,
+                         key_func:     None,
+                         id:           Relations::__Prefix_8 as RelId,
+                         rules:        vec![
+                             /* __Prefix_8[(_M, _N, _O, _P, e, f)] :- BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Extension(.f=f, .tm=_P, .e=e). */
+                             Rule::ArrangementRule {
+                                 description: "__Prefix_8[(_M, _N, _O, _P, e, f)] :- BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Extension(.f=f, .tm=_P, .e=e).".to_string(),
+                                 arr: ( Relations::BoolElim as RelId, 1),
+                                 xform: XFormArrangement::Join{
+                                            description: "BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Extension(.f=f, .tm=_P, .e=e)".to_string(),
+                                            ffun: None,
+                                            arrangement: (Relations::Extension as RelId,2),
                                             jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
                                             {
                                                 let (_M, _N, _O) = match *__v1{
@@ -14731,166 +14872,31 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                                                     },
                                                     _ => return None
                                                 };
-                                                let s = match *__v2{
-                                                    Value::Tm(ref __box) => {
+                                                let (f, _P, e) = match *__v2{
+                                                    Value::Extension(ref __box) => {
                                                         match *__box {
-                                                        Tm{tm: _, ty: ref s} => s,
+                                                        Extension{f: ref f, tm: ref _P, e: ref e} => (f, _P, e),
                                                         _ => return None
                                                         }
                                                     },
                                                     _ => return None
                                                 };
-                                                Some(Value::tuple4__TmS_TmS_TmS_TyS((_M.clone(), _N.clone(), _O.clone(), s.clone())))
+                                                Some(Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(boxed::Box::new((_M.clone(), _N.clone(), _O.clone(), _P.clone(), e.clone(), f.clone()))))
                                             }
                                             __f},
-                                            next: Box::new(Some(XFormCollection::Arrange {
-                                                                    description: "arrange BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Tm(.tm=_O, .ty=s) by (s)" .to_string(),
-                                                                    afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
-                                                                    {
-                                                                        let (_M, _N, _O, s) = match __v {
-                                                                            Value::tuple4__TmS_TmS_TmS_TyS(ref __box) => {
-                                                                                match *__box {
-                                                                                    (ref _M, ref _N, ref _O, ref s) => (_M, _N, _O, s),
-                                                                                    _ => unreachable!(),
-                                                                                }
-                                                                            },
-                                                                            _ => unreachable!()
-                                                                        };
-                                                                        Some((Value::TyS(s.clone()), Value::tuple4__TmS_TmS_TmS_TyS((_M.clone(), _N.clone(), _O.clone(), s.clone()))))
-                                                                    }
-                                                                    __f},
-                                                                    next: Box::new(XFormArrangement::Join{
-                                                                                       description: "BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Tm(.tm=_O, .ty=s), Ty(.ty=s, .ctx=_D)".to_string(),
-                                                                                       ffun: None,
-                                                                                       arrangement: (Relations::Ty as RelId,0),
-                                                                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
-                                                                                       {
-                                                                                           let (_M, _N, _O, s) = match *__v1 {
-                                                                                               Value::tuple4__TmS_TmS_TmS_TyS(ref __box) => {
-                                                                                                   match *__box {
-                                                                                                       (ref _M, ref _N, ref _O, ref s) => (_M, _N, _O, s),
-                                                                                                       _ => unreachable!(),
-                                                                                                   }
-                                                                                               },
-                                                                                               _ => unreachable!()
-                                                                                           };
-                                                                                           let _D = match *__v2{
-                                                                                               Value::Ty(ref __box) => {
-                                                                                                   match *__box {
-                                                                                                   Ty{ty: _, ctx: ref _D} => _D,
-                                                                                                   _ => return None
-                                                                                                   }
-                                                                                               },
-                                                                                               _ => return None
-                                                                                           };
-                                                                                           Some(Value::tuple5__CtxS_TmS_TmS_TmS_TyS(boxed::Box::new((_D.clone(), _M.clone(), _N.clone(), _O.clone(), s.clone()))))
-                                                                                       }
-                                                                                       __f},
-                                                                                       next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                               description: "arrange BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Tm(.tm=_O, .ty=s), Ty(.ty=s, .ctx=_D) by ()" .to_string(),
-                                                                                                               afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
-                                                                                                               {
-                                                                                                                   let (_D, _M, _N, _O, s) = match __v {
-                                                                                                                       Value::tuple5__CtxS_TmS_TmS_TmS_TyS(ref __box) => {
-                                                                                                                           match **__box {
-                                                                                                                               (ref _D, ref _M, ref _N, ref _O, ref s) => (_D, _M, _N, _O, s),
-                                                                                                                               _ => unreachable!(),
-                                                                                                                           }
-                                                                                                                       },
-                                                                                                                       _ => unreachable!()
-                                                                                                                   };
-                                                                                                                   Some((Value::tuple0__(()), Value::tuple5__CtxS_TmS_TmS_TmS_TyS(boxed::Box::new((_D.clone(), _M.clone(), _N.clone(), _O.clone(), s.clone())))))
-                                                                                                               }
-                                                                                                               __f},
-                                                                                                               next: Box::new(XFormArrangement::Join{
-                                                                                                                                  description: "BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Tm(.tm=_O, .ty=s), Ty(.ty=s, .ctx=_D), TmBar(.tm=_P, .f=f)".to_string(),
-                                                                                                                                  ffun: None,
-                                                                                                                                  arrangement: (Relations::TmBar as RelId,0),
-                                                                                                                                  jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
-                                                                                                                                  {
-                                                                                                                                      let (_D, _M, _N, _O, s) = match *__v1 {
-                                                                                                                                          Value::tuple5__CtxS_TmS_TmS_TmS_TyS(ref __box) => {
-                                                                                                                                              match **__box {
-                                                                                                                                                  (ref _D, ref _M, ref _N, ref _O, ref s) => (_D, _M, _N, _O, s),
-                                                                                                                                                  _ => unreachable!(),
-                                                                                                                                              }
-                                                                                                                                          },
-                                                                                                                                          _ => unreachable!()
-                                                                                                                                      };
-                                                                                                                                      let (_P, f) = match *__v2{
-                                                                                                                                          Value::TmBar(ref __box) => {
-                                                                                                                                              match *__box {
-                                                                                                                                              TmBar{tm: ref _P, f: ref f} => (_P, f),
-                                                                                                                                              _ => return None
-                                                                                                                                              }
-                                                                                                                                          },
-                                                                                                                                          _ => return None
-                                                                                                                                      };
-                                                                                                                                      Some(Value::tuple7__CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(boxed::Box::new((_D.clone(), _M.clone(), _N.clone(), _O.clone(), _P.clone(), f.clone(), s.clone()))))
-                                                                                                                                  }
-                                                                                                                                  __f},
-                                                                                                                                  next: Box::new(Some(XFormCollection::Arrange {
-                                                                                                                                                          description: "arrange BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Tm(.tm=_O, .ty=s), Ty(.ty=s, .ctx=_D), TmBar(.tm=_P, .f=f) by (f, _D)" .to_string(),
-                                                                                                                                                          afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
-                                                                                                                                                          {
-                                                                                                                                                              let (_D, _M, _N, _O, _P, f, s) = match __v {
-                                                                                                                                                                  Value::tuple7__CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(ref __box) => {
-                                                                                                                                                                      match **__box {
-                                                                                                                                                                          (ref _D, ref _M, ref _N, ref _O, ref _P, ref f, ref s) => (_D, _M, _N, _O, _P, f, s),
-                                                                                                                                                                          _ => unreachable!(),
-                                                                                                                                                                      }
-                                                                                                                                                                  },
-                                                                                                                                                                  _ => unreachable!()
-                                                                                                                                                              };
-                                                                                                                                                              Some((Value::tuple2__CtxMorphS_CtxS((f.clone(), _D.clone())), Value::tuple7__CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(boxed::Box::new((_D.clone(), _M.clone(), _N.clone(), _O.clone(), _P.clone(), f.clone(), s.clone())))))
-                                                                                                                                                          }
-                                                                                                                                                          __f},
-                                                                                                                                                          next: Box::new(XFormArrangement::Join{
-                                                                                                                                                                             description: "BoolElim(.trueCase=_M, .falseCase=_N, .tm=_O), Tm(.tm=_O, .ty=s), Ty(.ty=s, .ctx=_D), TmBar(.tm=_P, .f=f), CtxMorph(.f=f, .from=_G, .to=_D)".to_string(),
-                                                                                                                                                                             ffun: None,
-                                                                                                                                                                             arrangement: (Relations::CtxMorph as RelId,4),
-                                                                                                                                                                             jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
-                                                                                                                                                                             {
-                                                                                                                                                                                 let (_D, _M, _N, _O, _P, f, s) = match *__v1 {
-                                                                                                                                                                                     Value::tuple7__CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(ref __box) => {
-                                                                                                                                                                                         match **__box {
-                                                                                                                                                                                             (ref _D, ref _M, ref _N, ref _O, ref _P, ref f, ref s) => (_D, _M, _N, _O, _P, f, s),
-                                                                                                                                                                                             _ => unreachable!(),
-                                                                                                                                                                                         }
-                                                                                                                                                                                     },
-                                                                                                                                                                                     _ => unreachable!()
-                                                                                                                                                                                 };
-                                                                                                                                                                                 let _G = match *__v2{
-                                                                                                                                                                                     Value::CtxMorph(ref __box) => {
-                                                                                                                                                                                         match *__box {
-                                                                                                                                                                                         CtxMorph{f: _, from: ref _G, to: _} => _G,
-                                                                                                                                                                                         _ => return None
-                                                                                                                                                                                         }
-                                                                                                                                                                                     },
-                                                                                                                                                                                     _ => return None
-                                                                                                                                                                                 };
-                                                                                                                                                                                 Some(Value::tuple8__CtxS_CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(boxed::Box::new((_D.clone(), _G.clone(), _M.clone(), _N.clone(), _O.clone(), _P.clone(), f.clone(), s.clone()))))
-                                                                                                                                                                             }
-                                                                                                                                                                             __f},
-                                                                                                                                                                             next: Box::new(None)
-                                                                                                                                                                         })
-                                                                                                                                                      }))
-                                                                                                                              })
-                                                                                                           }))
-                                                                                   })
-                                                                }))
+                                            next: Box::new(None)
                                         }
                              }],
                          arrangements: vec![
                              Arrangement::Map{
-                                name: r###"(_, _, _, _, _, _0, _, _)"###.to_string(),
+                                name: r###"(_, _, _, _0, _, _)"###.to_string(),
                                  afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
                                  {
                                      let __cloned = __v.clone();
                                      {
-                                         if let Value::tuple8__CtxS_CtxS_TmS_TmS_TmS_TmS_CtxMorphS_TyS(__box) = __v {
+                                         if let Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(__box) = __v {
                                              match *__box {
-                                             (_, _, _, _, _, ref _0, _, _) => Some(Value::TmS(_0.clone())),
+                                             (_, _, _, ref _0, _, _) => Some(Value::TmS(_0.clone())),
                                              _ => None
                                              }
                                          } else { None }
@@ -14901,77 +14907,94 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                              }],
                          change_cb:    None
                      };
-    let TmBar = Relation {
-                    name:         "TmBar".to_string(),
-                    input:        false,
-                    distinct:     false,
-                    key_func:     None,
-                    id:           Relations::TmBar as RelId,
-                    rules:        vec![
-                        /* TmBar(.tm=_M, .f=e) :- Extension(.f=f, .tm=_M, .e=e), IdMorph(.f=f). */
-                        Rule::ArrangementRule {
-                            description: "TmBar(.tm=_M, .f=e) :- Extension(.f=f, .tm=_M, .e=e), IdMorph(.f=f).".to_string(),
-                            arr: ( Relations::Extension as RelId, 1),
-                            xform: XFormArrangement::Join{
-                                       description: "Extension(.f=f, .tm=_M, .e=e), IdMorph(.f=f)".to_string(),
-                                       ffun: None,
-                                       arrangement: (Relations::IdMorph as RelId,0),
-                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
-                                       {
-                                           let (f, _M, e) = match *__v1{
-                                               Value::Extension(ref __box) => {
-                                                   match *__box {
-                                                   Extension{f: ref f, tm: ref _M, e: ref e} => (f, _M, e),
-                                                   _ => return None
-                                                   }
-                                               },
-                                               _ => return None
-                                           };
-                                           let () = match *__v2{
-                                               Value::IdMorph(ref __box) => {
-                                                   match *__box {
-                                                   IdMorph{f: _} => (),
-                                                   _ => return None
-                                                   }
-                                               },
-                                               _ => return None
-                                           };
-                                           Some(Value::TmBar(TmBar{tm: _M.clone(), f: e.clone()}))
-                                       }
-                                       __f},
-                                       next: Box::new(None)
-                                   }
-                        }],
-                    arrangements: vec![
-                        Arrangement::Map{
-                           name: r###"_"###.to_string(),
-                            afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
-                            {
-                                let __cloned = __v.clone();
-                                {
-                                    if let Value::TmBar(__box) = __v {
-                                        match __box {
-                                        _ => Some(Value::tuple0__(())),
-                                        _ => None
-                                        }
-                                    } else { None }
-                                }.map(|x|(x,__cloned))
-                            }
-                            __f},
-                            queryable: false
-                        }],
-                    change_cb:    Some(sync::Arc::new(sync::Mutex::new(__update_cb.clone())))
-                };
-    let __Prefix_3 = Relation {
-                         name:         "__Prefix_3".to_string(),
+    let __Prefix_1 = Relation {
+                         name:         "__Prefix_1".to_string(),
                          input:        false,
                          distinct:     false,
                          key_func:     None,
-                         id:           Relations::__Prefix_3 as RelId,
+                         id:           Relations::__Prefix_1 as RelId,
                          rules:        vec![
-                             /* __Prefix_3[(ctx, id)] :- IdMorph(.f=id), CtxMorph(.f=id, .from=ctx, .to=_). */
+                             /* __Prefix_1[(_M, _N, _O, _P, e, f)] :- __Prefix_8[(_M, _N, _O, _P, e, f)], True(.tm=_P). */
                              Rule::ArrangementRule {
-                                 description: "__Prefix_3[(ctx, id)] :- IdMorph(.f=id), CtxMorph(.f=id, .from=ctx, .to=_).".to_string(),
+                                 description: "__Prefix_1[(_M, _N, _O, _P, e, f)] :- __Prefix_8[(_M, _N, _O, _P, e, f)], True(.tm=_P).".to_string(),
+                                 arr: ( Relations::__Prefix_8 as RelId, 0),
+                                 xform: XFormArrangement::Join{
+                                            description: "__Prefix_8[(_M, _N, _O, _P, e, f)], True(.tm=_P)".to_string(),
+                                            ffun: None,
+                                            arrangement: (Relations::True as RelId,0),
+                                            jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
+                                            {
+                                                let (_M, _N, _O, _P, e, f) = match *__v1{
+                                                    Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(ref __box) => {
+                                                        match **__box {
+                                                        (ref _M, ref _N, ref _O, ref _P, ref e, ref f) => (_M, _N, _O, _P, e, f),
+                                                        _ => return None
+                                                        }
+                                                    },
+                                                    _ => return None
+                                                };
+                                                let () = match *__v2{
+                                                    Value::True(ref __box) => {
+                                                        match *__box {
+                                                        True{tm: _} => (),
+                                                        _ => return None
+                                                        }
+                                                    },
+                                                    _ => return None
+                                                };
+                                                Some(Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(boxed::Box::new((_M.clone(), _N.clone(), _O.clone(), _P.clone(), e.clone(), f.clone()))))
+                                            }
+                                            __f},
+                                            next: Box::new(None)
+                                        }
+                             }],
+                         arrangements: vec![
+                             Arrangement::Map{
+                                name: r###"(_, _, _0, _, _1, _)"###.to_string(),
+                                 afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
+                                 {
+                                     let __cloned = __v.clone();
+                                     {
+                                         if let Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(__box) = __v {
+                                             match *__box {
+                                             (_, _, ref _0, _, ref _1, _) => Some(Value::tuple2__TmS_CtxMorphS((_0.clone(), _1.clone()))),
+                                             _ => None
+                                             }
+                                         } else { None }
+                                     }.map(|x|(x,__cloned))
+                                 }
+                                 __f},
+                                 queryable: false
+                             },
+                             Arrangement::Map{
+                                name: r###"(_0, _, _, _, _, _1)"###.to_string(),
+                                 afun: &{fn __f(__v: Value) -> Option<(Value,Value)>
+                                 {
+                                     let __cloned = __v.clone();
+                                     {
+                                         if let Value::tuple6__TmS_TmS_TmS_TmS_CtxMorphS_CtxMorphS(__box) = __v {
+                                             match *__box {
+                                             (ref _0, _, _, _, _, ref _1) => Some(Value::tuple2__TmS_CtxMorphS((_0.clone(), _1.clone()))),
+                                             _ => None
+                                             }
+                                         } else { None }
+                                     }.map(|x|(x,__cloned))
+                                 }
+                                 __f},
+                                 queryable: false
+                             }],
+                         change_cb:    None
+                     };
+    let __Prefix_4 = Relation {
+                         name:         "__Prefix_4".to_string(),
+                         input:        false,
+                         distinct:     false,
+                         key_func:     None,
+                         id:           Relations::__Prefix_4 as RelId,
+                         rules:        vec![
+                             /* __Prefix_4[(ctx, id)] :- IdMorph(.f=id), CtxMorph(.f=id, .from=ctx, .to=_). */
+                             Rule::ArrangementRule {
+                                 description: "__Prefix_4[(ctx, id)] :- IdMorph(.f=id), CtxMorph(.f=id, .from=ctx, .to=_).".to_string(),
                                  arr: ( Relations::IdMorph as RelId, 0),
                                  xform: XFormArrangement::Join{
                                             description: "IdMorph(.f=id), CtxMorph(.f=id, .from=ctx, .to=_)".to_string(),
@@ -15107,6 +15130,51 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
                       }],
                   change_cb:    Some(sync::Arc::new(sync::Mutex::new(__update_cb.clone())))
               };
+    let TmBar = Relation {
+                    name:         "TmBar".to_string(),
+                    input:        false,
+                    distinct:     true,
+                    key_func:     None,
+                    id:           Relations::TmBar as RelId,
+                    rules:        vec![
+                        /* TmBar(.tm=_M, .f=e) :- Extension(.f=f, .tm=_M, .e=e), IdMorph(.f=f). */
+                        Rule::ArrangementRule {
+                            description: "TmBar(.tm=_M, .f=e) :- Extension(.f=f, .tm=_M, .e=e), IdMorph(.f=f).".to_string(),
+                            arr: ( Relations::Extension as RelId, 1),
+                            xform: XFormArrangement::Join{
+                                       description: "Extension(.f=f, .tm=_M, .e=e), IdMorph(.f=f)".to_string(),
+                                       ffun: None,
+                                       arrangement: (Relations::IdMorph as RelId,0),
+                                       jfun: &{fn __f(_: &Value ,__v1: &Value,__v2: &Value) -> Option<Value>
+                                       {
+                                           let (f, _M, e) = match *__v1{
+                                               Value::Extension(ref __box) => {
+                                                   match *__box {
+                                                   Extension{f: ref f, tm: ref _M, e: ref e} => (f, _M, e),
+                                                   _ => return None
+                                                   }
+                                               },
+                                               _ => return None
+                                           };
+                                           let () = match *__v2{
+                                               Value::IdMorph(ref __box) => {
+                                                   match *__box {
+                                                   IdMorph{f: _} => (),
+                                                   _ => return None
+                                                   }
+                                               },
+                                               _ => return None
+                                           };
+                                           Some(Value::TmBar(TmBar{tm: _M.clone(), f: e.clone()}))
+                                       }
+                                       __f},
+                                       next: Box::new(None)
+                                   }
+                        }],
+                    arrangements: vec![
+                        ],
+                    change_cb:    Some(sync::Arc::new(sync::Mutex::new(__update_cb.clone())))
+                };
     let __Null = Relation {
                      name:         "__Null".to_string(),
                      input:        false,
@@ -15160,7 +15228,8 @@ pub fn prog(__update_cb: Box<dyn CBFn<Value>>) -> Program<Value> {
             ProgNode::Rel{rel: TyEqInput},
             ProgNode::Rel{rel: TyInput},
             ProgNode::Rel{rel: TySubstInput},
-            ProgNode::SCC{rels: vec![RecursiveRelation{rel: Bool, distinct: true}, RecursiveRelation{rel: CtxMorph, distinct: true}, RecursiveRelation{rel: CtxEq, distinct: true}, RecursiveRelation{rel: Comprehension, distinct: true}, RecursiveRelation{rel: TyEq, distinct: true}, RecursiveRelation{rel: Id, distinct: true}, RecursiveRelation{rel: TmEq, distinct: true}, RecursiveRelation{rel: BoolElim, distinct: true}, RecursiveRelation{rel: Extension, distinct: true}, RecursiveRelation{rel: Comp, distinct: true}, RecursiveRelation{rel: CtxMorphEq, distinct: true}, RecursiveRelation{rel: CtxEmpty, distinct: true}, RecursiveRelation{rel: IdMorph, distinct: true}, RecursiveRelation{rel: __Prefix_2, distinct: true}, RecursiveRelation{rel: ProjCtx, distinct: true}, RecursiveRelation{rel: ProjTm, distinct: true}, RecursiveRelation{rel: TmSubst, distinct: true}, RecursiveRelation{rel: False, distinct: true}, RecursiveRelation{rel: Ty, distinct: true}, RecursiveRelation{rel: __Prefix_4, distinct: true}, RecursiveRelation{rel: Tm, distinct: true}, RecursiveRelation{rel: Refl, distinct: true}, RecursiveRelation{rel: __Prefix_6, distinct: true}, RecursiveRelation{rel: True, distinct: true}, RecursiveRelation{rel: __Prefix_5, distinct: true}, RecursiveRelation{rel: TySubst, distinct: true}, RecursiveRelation{rel: __Prefix_1, distinct: true}, RecursiveRelation{rel: Weakening, distinct: true}, RecursiveRelation{rel: __Prefix_0, distinct: true}, RecursiveRelation{rel: TmBar, distinct: true}, RecursiveRelation{rel: __Prefix_3, distinct: true}, RecursiveRelation{rel: Ctx, distinct: true}]},
+            ProgNode::SCC{rels: vec![RecursiveRelation{rel: Bool, distinct: true}, RecursiveRelation{rel: CtxMorph, distinct: true}, RecursiveRelation{rel: CtxEq, distinct: true}, RecursiveRelation{rel: Comprehension, distinct: true}, RecursiveRelation{rel: TyEq, distinct: true}, RecursiveRelation{rel: Id, distinct: true}, RecursiveRelation{rel: TmEq, distinct: true}, RecursiveRelation{rel: BoolElim, distinct: true}, RecursiveRelation{rel: Extension, distinct: true}, RecursiveRelation{rel: Comp, distinct: true}, RecursiveRelation{rel: CtxMorphEq, distinct: true}, RecursiveRelation{rel: CtxEmpty, distinct: true}, RecursiveRelation{rel: IdMorph, distinct: true}, RecursiveRelation{rel: __Prefix_3, distinct: true}, RecursiveRelation{rel: ProjCtx, distinct: true}, RecursiveRelation{rel: ProjTm, distinct: true}, RecursiveRelation{rel: TmSubst, distinct: true}, RecursiveRelation{rel: False, distinct: true}, RecursiveRelation{rel: Ty, distinct: true}, RecursiveRelation{rel: __Prefix_5, distinct: true}, RecursiveRelation{rel: Tm, distinct: true}, RecursiveRelation{rel: Refl, distinct: true}, RecursiveRelation{rel: __Prefix_7, distinct: true}, RecursiveRelation{rel: True, distinct: true}, RecursiveRelation{rel: __Prefix_6, distinct: true}, RecursiveRelation{rel: TySubst, distinct: true}, RecursiveRelation{rel: __Prefix_2, distinct: true}, RecursiveRelation{rel: Weakening, distinct: true}, RecursiveRelation{rel: __Prefix_0, distinct: true}, RecursiveRelation{rel: __Prefix_8, distinct: true}, RecursiveRelation{rel: __Prefix_1, distinct: true}, RecursiveRelation{rel: __Prefix_4, distinct: true}, RecursiveRelation{rel: Ctx, distinct: true}]},
+            ProgNode::Rel{rel: TmBar},
             ProgNode::Rel{rel: __Null}
         ],
         init_data: vec![
