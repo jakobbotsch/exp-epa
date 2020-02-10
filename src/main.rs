@@ -1,6 +1,9 @@
 #[macro_use] extern crate lalrpop_util;
 
 mod lang;
+mod cwf;
+mod model;
+mod type_checker;
 
 fn main() {
     let negb = "
@@ -11,6 +14,6 @@ def negb (b : bool) : bool :=
     end.";
 
     let negb = lang::parser::DefParser::new().parse(negb);
-    //let a = rules::get_dptt();
+    let result = 
     println!("{:?}", negb.unwrap());
 }
