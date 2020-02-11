@@ -51,13 +51,15 @@ extern "C" size_t define_operation(partial_structure* pstruct, const operation* 
         }
     }
 
+    size_t new_id = pstruct->carrier.size();
+    pstruct->carrier[new_id] = op->cod;
+
     std::vector<size_t> vec;
     vec.reserve(op->dom.size() + 1);
     vec.insert(vec.begin(), args, args + op->dom.size());
-    size_t id = rel.size();
-    vec.push_back(id);
+    vec.push_back(new_id);
     rel.insert(std::move(vec));
-    return id;
+    return new_id;
 }
 
 extern "C" void define_predicate(partial_structure* pstruct, const predicate* pred, size_t* args) {
