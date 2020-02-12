@@ -10,7 +10,7 @@ impl<T: Model> TypeChecker<T> {
     pub fn new(model: T) -> TypeChecker<T> {
         TypeChecker { model }
     }
-    pub fn check_def(&mut self, def: &Def) -> Result<&Tm, String> {
+    pub fn check_def(&mut self, def: &Def) -> Result<Tm, String> {
         Err("oh shit waddup".to_string())
     }
 }

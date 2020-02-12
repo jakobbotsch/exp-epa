@@ -1,10 +1,10 @@
-#[derive(PartialEq, Eq, Clone, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Hash)]
 pub enum Ctx {
   Empty,
   Comprehension(Box<Ctx>, Box<Ty>),
 }
 
-#[derive(PartialEq, Eq, Clone, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Hash)]
 pub enum Morph {
   Identity(Box<Ctx>),
   Initial(Box<Ctx>), // Initial morphism from <> -> G
@@ -17,14 +17,14 @@ pub enum Morph {
   Extension(Box<Morph>, Box<Ty>, Box<Tm>),
 }
 
-#[derive(PartialEq, Eq, Clone, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Hash)]
 pub enum Ty {
   Subst(Box<Morph>, Box<Ty>),
   Bool(Box<Ctx>),
   Eq(Box<Tm>, Box<Tm>),
 }
 
-#[derive(PartialEq, Eq, Clone, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Hash)]
 pub enum Tm {
   Subst(Box<Morph>, Box<Tm>),
   Var(Box<Ty>),
