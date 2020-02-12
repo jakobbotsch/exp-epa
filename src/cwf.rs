@@ -1,79 +1,43 @@
-type Id = u32;
+type Id = ();
 
-#[derive(Debug, PartialEq, Eq)]
-pub enum Ctx<'a> {
-    Empty(Id),
-    Comprehension(Id, &'a Ctx<'a>, &'a Ty<'a>),
+#[derive(PartialEq, Eq, Clone, Hash)]
+pub enum CtxPayload {
+  Empty,
+  Comprehension(Box<Ctx>, Box<Ty>),
 }
 
-#[derive(Debug, PartialEq, Eq)]
-pub enum Morph<'a> {
-    Identity(Id, &'a Ctx<'a>),
-    Terminal(Id, &'a Ctx<'a>),
-    Projection(Id, &'a Ctx<'a>),
-    Composition(Id, &'a Morph<'a>, &'a Morph<'a>),
-    Extension(Id, &'a Morph<'a>, &'a Tm<'a>),
+#[derive(PartialEq, Eq, Clone, Hash)]
+pub enum MorphPayload {
+  Identity(Box<Ctx>),
+  Initial(Box<Ctx>), // Initial morphism from <> -> G
+  Weakening(Box<Ctx>), // G -> G.A
+  Composition(Box<Morph>, Box<Morph>), // g . f
+  // f : G -> D
+  // a \in Tm(G)
+  // <f, a> : G -> D.fa
+  Extension(Box<Morph>, Box<Tm>), // <f, a> for f : D -> G, a \i
 }
 
-#[derive(Debug, PartialEq, Eq)]
-pub enum Ty<'a> {
-    Subst(Id, &'a Ty<'a>, &'a Morph<'a>),
-    Bool(Id, &'a Ctx<'a>),
-    Eq(Id, &'a Tm<'a>, &'a Tm<'a>),
+#[derive(PartialEq, Eq, Clone, Hash)]
+pub enum TyPayload {
+  Subst(Box<Morph>, Box<Ty>),
+  Bool(Box<Ctx>),
+  EqTy(Box<Tm>, Box<Tm>),
 }
 
-#[derive(Debug, PartialEq, Eq)]
-pub enum Tm<'a> {
-    Subst(Id, &'a Tm<'a>, &'a Morph<'a>),
-    Projection(Id, &'a Ctx<'a>),
-    True(Id, &'a Ctx<'a>),
-    False(Id, &'a Ctx<'a>),
-    ElimBool { id: Id, into: &'a Ty<'a>, true_case: &'a Tm<'a>, false_case: &'a Tm<'a> },
+#[derive(PartialEq, Eq, Clone, Hash)]
+pub enum TmPayload {
+  Subst(Box<Morph>, Box<Tm>),
+  Projection(Box<Ctx>),
+  True(Box<Ctx>),
+  False(Box<Ctx>),
+  ElimBool { into: Box<Ty>, true_case: Box<Tm>, false_case: Box<Tm> },
 }
 
-pub trait CwfEntity {
-    fn get_id(&self) -> Id;
-}
+#[derive(PartialEq, Eq, Clone, Hash)]
+pub struct WithId<T>(pub Id, pub T);
 
-impl CwfEntity for Ctx<'_> {
-    fn get_id(&self) -> Id {
-        match self {
-            &Ctx::Empty(id) => id,
-            &Ctx::Comprehension(id, _, _) => id,
-        }
-    }
-}
-
-impl CwfEntity for Morph<'_> {
-    fn get_id(&self) -> Id {
-        match self {
-            &Morph::Identity(id, _) => id,
-            &Morph::Terminal(id, _) => id,
-            &Morph::Projection(id, _) => id,
-            &Morph::Composition(id, _, _) => id,
-            &Morph::Extension(id, _, _) => id,
-        }
-    }
-}
-
-impl CwfEntity for Ty<'_> {
-    fn get_id(&self) -> Id {
-        match self {
-            &Ty::Subst(id, _, _) => id,
-            &Ty::Bool(id, _) => id,
-            &Ty::Eq(id, _, _) => id,
-        }
-    }
-}
-
-impl CwfEntity for Tm<'_> {
-    fn get_id(&self) -> Id {
-        match self {
-            &Tm::Subst(id, _, _) => id,
-            &Tm::Projection(id, _) => id,
-            &Tm::True(id, _) => id,
-            &Tm::False(id, _) => id,
-            &Tm::ElimBool { id, .. } => id,
-        }
-    }
-}
+pub type Ctx = WithId<CtxPayload>;
+pub type Morph = WithId<MorphPayload>;
+pub type Ty = WithId<TyPayload>;
+pub type Tm = WithId<TmPayload>;
