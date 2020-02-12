@@ -1,8 +1,13 @@
-#[macro_use] extern crate lalrpop_util;
+#[macro_use]
+extern crate lalrpop_util;
+#[macro_use]
+extern crate lazy_static;
+extern crate libc;
 
 mod lang;
 mod cwf;
 mod model;
+mod cwf_model;
 mod type_checker;
 
 fn main() {
