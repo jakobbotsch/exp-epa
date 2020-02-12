@@ -1,43 +1,35 @@
-type Id = ();
-
 #[derive(PartialEq, Eq, Clone, Hash)]
-pub enum CtxPayload {
+pub enum Ctx {
   Empty,
   Comprehension(Box<Ctx>, Box<Ty>),
 }
 
 #[derive(PartialEq, Eq, Clone, Hash)]
-pub enum MorphPayload {
+pub enum Morph {
   Identity(Box<Ctx>),
   Initial(Box<Ctx>), // Initial morphism from <> -> G
-  Weakening(Box<Ctx>), // G -> G.A
+  Weakening(Box<Ty>), // G -> G.A
   Composition(Box<Morph>, Box<Morph>), // g . f
   // f : G -> D
-  // a \in Tm(G)
-  // <f, a> : G -> D.fa
-  Extension(Box<Morph>, Box<Tm>), // <f, a> for f : D -> G, a \i
+  // s \in Ty(G)
+  // M \in Tm(fs)
+  // <f, s, M> : G.s -> D
+  Extension(Box<Morph>, Box<Ty>, Box<Tm>),
 }
 
 #[derive(PartialEq, Eq, Clone, Hash)]
-pub enum TyPayload {
+pub enum Ty {
   Subst(Box<Morph>, Box<Ty>),
   Bool(Box<Ctx>),
-  EqTy(Box<Tm>, Box<Tm>),
+  Eq(Box<Tm>, Box<Tm>),
 }
 
 #[derive(PartialEq, Eq, Clone, Hash)]
-pub enum TmPayload {
+pub enum Tm {
   Subst(Box<Morph>, Box<Tm>),
-  Projection(Box<Ctx>),
+  Var(Box<Ty>),
+  Refl(Box<Tm>),
   True(Box<Ctx>),
   False(Box<Ctx>),
-  ElimBool { into: Box<Ty>, true_case: Box<Tm>, false_case: Box<Tm> },
+  ElimBool(Box<Ty>, Box<Tm>, Box<Tm>),
 }
-
-#[derive(PartialEq, Eq, Clone, Hash)]
-pub struct WithId<T>(pub Id, pub T);
-
-pub type Ctx = WithId<CtxPayload>;
-pub type Morph = WithId<MorphPayload>;
-pub type Ty = WithId<TyPayload>;
-pub type Tm = WithId<TmPayload>;
